@@ -17,5 +17,6 @@ public class PruebaMulan {
 		}while (Mulan.charlar(b.getEntrada()));
 	}
 	
+	//Esto deberia funcionar???
 
 }
