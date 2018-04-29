@@ -47,5 +47,6 @@ public class Mulan {
 			System.out.println(Lenguaje.respuestas_estado());
 		}
 	}
+
 	
 }

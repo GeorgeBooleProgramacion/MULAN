@@ -13,14 +13,14 @@ public class Clima {
 	
 	private Date dt;	//Time of data calculation
 	
-	private Coord coodenadas;
-	private Weather climaActual;
-	private MainData datosPrincipales;
-	private Wind viento;
-	private Clouds nubes;
-	private Rain lluvia;
-	private Snow nieve;
-	private Sys datosSys;
+	private Coord coord;
+	private Weather weather;
+	private MainData main;
+	private Wind wind;
+	private Clouds clouds;
+	private Rain rain;
+	private Snow snow;
+	private Sys sys;
 	
 	
 	
@@ -39,6 +39,21 @@ public class Clima {
 		String main, 	//condicion climatica
 			   description, 	//descripcion de la condicion
 			   icon;		//icono de la condicion
+
+		
+		public int getId() {
+			return id;
+		}
+
+		public String getMain() {
+			return main;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+		
+		
 	}
 	
 	public class MainData {
@@ -77,6 +92,35 @@ public class Clima {
 		
 		Date sunrise, 		//hora del amanecer
 			 sunset;		//hora del atardecer
+	}
+	
+	
+	
+	
+	
+
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Date getDt() {
+		return dt;
+	}
+
+	public Weather getWeather() {
+		return weather;
+	}
+
+	public MainData getMain() {
+		return main;
+	}
+
+	public Sys getSys() {
+		return sys;
 	}
 	
 }

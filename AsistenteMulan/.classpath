@@ -6,5 +6,7 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="servicios"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="D:/Documents/Universidad/Cuatrimestre 9/Progra Avanzada/GeorgeBoole/MULAN/Jars/gson-2.6.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/Universidad/Cuatrimestre 9/Progra Avanzada/GeorgeBoole/MULAN/Jars/gson-2.2.2.jar/gson-2.2.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
