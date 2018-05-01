@@ -6,31 +6,31 @@ public class Clima {
 
 	private int id, 	//de la ciudad
 				cod, 	//Internal parameter
-				visibility;		//visibilidad actualmente 		>>> 	REVISAR SI PONERLO!!!
+				visibility;		//visibilidad actualmente 		>>> 	ES IMPORTANTE?
 	
 	private String name, 	//de la ciudad
 				   base;	//Internal parameter		
 	
-	private Date dt;	//Time of data calculation
+	//private Date dt;	//Time of data calculation			>>>			BUSCAR COMO PARSEAR LOS DATOS DE FECHAS
 	
 	private Coord coord;
-	private Weather weather;
+	private Weather[] weather;
 	private MainData main;
 	private Wind wind;
 	private Clouds clouds;
 	private Rain rain;
 	private Snow snow;
-	private Sys sys;
+	private Sys sys;	//						>>>				BUSCAR COMO PARSEAR LAS HORAS!!!
 	
 	
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	///Objetos que usa Clima
+	///OBJETOS QUE USA CLIMA
 	
 	public class Coord {		//coordenadas de la ciudad
-		int lon, 
-			lat;
+		float lon, 
+			  lat;
 	}
 	
 	public class Weather {
@@ -57,18 +57,49 @@ public class Clima {
 	}
 	
 	public class MainData {
-		int temp, 		//actual
-		    pressure, 		//presion atmosferica en hPa
+		float temp, 		//actual
+			  temp_min, 		//variacion de la temp actual
+			  temp_max; 		//variacion de la temp actual
+		
+		int pressure, 		//presion atmosferica en hPa
 		    humidity, 		//humedad en %
-		    temp_min, 		//variacion de la temp actual
-		    temp_max, 		//variacion de la temp actual
 		    sea_level, 		//presion atmosferica al nivel del mar
 		    grnd_level;		//presion atmosferica al nivel de la tierra
+		
+
+		public float getTemp() {
+			return temp;
+		}
+
+		public float getTemp_min() {
+			return temp_min;
+		}
+
+		public float getTemp_max() {
+			return temp_max;
+		}
+
+		public int getPressure() {
+			return pressure;
+		}
+
+		public int getHumidity() {
+			return humidity;
+		}
 	}
 	
 	public class Wind {
-		int speed, 		//en m/s
-			deg;	//direccion del viento en grados
+		float speed; 		//en m/s
+		int deg;	//direccion del viento en grados
+		
+		
+		public float getSpeed() {
+			return speed;
+		}
+		public int getDeg() {
+			return deg;
+		}
+		
 	}
 	
 	public class Clouds {
@@ -85,19 +116,26 @@ public class Clima {
 	
 	public class Sys {
 		int type, 	//Internal parameter
-			id, 	//Internal parameter
-			message;	//Internal parameter
+			id; 	//Internal parameter
+		float message;	//Internal parameter
 		
 		String country;		//Pais
-		
+
+		/*
 		Date sunrise, 		//hora del amanecer
 			 sunset;		//hora del atardecer
+		*/
+		
+		
+		public String getCountry() {
+			return country;
+		}
 	}
 	
 	
 	
 	
-	
+	///GETTERS DE LA CLASE CLIMA
 
 	public int getId() {
 		return id;
@@ -107,12 +145,14 @@ public class Clima {
 		return name;
 	}
 
+	/*
 	public Date getDt() {
 		return dt;
 	}
+	*/
 
 	public Weather getWeather() {
-		return weather;
+		return weather[0];
 	}
 
 	public MainData getMain() {
@@ -121,6 +161,15 @@ public class Clima {
 
 	public Sys getSys() {
 		return sys;
+	}
+	
+	
+	
+	
+	///METODOS DE CLIMA
+	
+	public String toString() {
+		return "Condicion climatica actual: " + getWeather().getDescription();
 	}
 	
 }
