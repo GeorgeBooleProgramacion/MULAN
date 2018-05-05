@@ -12,7 +12,7 @@ import as.Asistente;
 
 public class RF03Tests {
 	public final static String USUARIO = "delucas";
-	public final static Date FECHA_HORA = new GregorianCalendar(2018, 3, 1, 15, 15, 0).getTime();
+	//public final static Date FECHA_HORA = new GregorianCalendar(2018, 3, 1, 15, 15, 0).getTime();
 	
 	Asistente mulan;
 	
