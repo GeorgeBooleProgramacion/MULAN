@@ -8,12 +8,12 @@ Requisitos primera entrega:
 
 1) Como usuario quiero saludar al asistente para tener un trato cordial con él. 5pts. Hola. Buen día. Buenas tardes. Etc.
 
-Branch: jajaSalu2
+Branch: saludos
 
 
 2) Como usuario quiero agradecer al asistente para mantener una buena relación con él. 5pts. Gracias. Muchas gracias. Etc.
 
-Branch: jajaSalu2
+Branch: saludos
 
 
 3) Como usuario quiero pedirle al asistente datos temporarios para comprender en qué momento del día estamos. 10pts. Hora, Fecha, Día de la semana.
