@@ -47,13 +47,15 @@ public class ConectorClima {
 		
 		//Mandando el id de la ciudad te devuelve el clima en este momento
 		public String getClimaActualId(String id) {
-			return conectarAPI("https://api.openweathermap.org/data/2.5/weather?id=" + id + "&units=metric" + "&APPID= " + apiKey);
+			return conectarAPI("https://api.openweathermap.org/data/2.5/weather?id=" + id + "&units=metric" + "&APPID=" + apiKey);
 		}
 		
 		
 		//Igual que el anterior pero mandando la ciudad directamente (q={city name},{country code})
-		public String getClimaActualCiudad(String ciudad) {
-			return conectarAPI("https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&units=metric" + "&APPID= " + apiKey );
+		public String getClimaActualCiudad(String ciudad, String pais) {
+			ciudad = ciudad.toLowerCase();
+			pais = pais.toLowerCase();
+			return conectarAPI("https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "," + pais + "&units=metric" + "&APPID=" + apiKey );
 		}
 		
 	

@@ -23,6 +23,9 @@ public class Clima {
 	private Sys sys;	//						>>>				BUSCAR COMO PARSEAR LAS HORAS!!!
 	
 	
+	private Boolean error;
+	
+	
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -104,6 +107,10 @@ public class Clima {
 	
 	public class Clouds {
 		int all;	//cantidad de nubes en %
+
+		public int getAll() {
+			return all;
+		}
 	}
 	
 	public class Rain {
@@ -159,10 +166,23 @@ public class Clima {
 		return main;
 	}
 
+	public Clouds getClouds() {
+		return clouds;
+	}
+
 	public Sys getSys() {
 		return sys;
 	}
 	
+	////////////////////////////////////////
+	public Boolean getError() {
+		return error;
+	}
+
+	public void setError(Boolean error) {
+		this.error = error;
+	}
+	////////////////////////////////////////
 	
 	
 	
@@ -171,5 +191,7 @@ public class Clima {
 	public String toString() {
 		return "Condicion climatica actual: " + getWeather().getDescription();
 	}
+
+	
 	
 }
