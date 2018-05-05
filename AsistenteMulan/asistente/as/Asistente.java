@@ -82,15 +82,15 @@ public class Asistente {
 			}
 			
 			if(Lenguaje.getPosEncontrada() == Integer.parseInt(dh.substring(dh.indexOf('.') + 1))/*1*/) {
-				return Lenguaje.respuesta_dia_hace(msj);
+				return "@" + this.user + " fue " + Lenguaje.respuesta_dia_hace(msj);
 			}
 			
 			if(Lenguaje.getPosEncontrada() == Integer.parseInt(td.substring(td.indexOf('.') + 1))/*2*/) {
-				return Lenguaje.respuesta_tiempo_desde(msj);
+				return "@" + this.user + Lenguaje.respuesta_tiempo_desde(msj);
 			}
 			
 			if(Lenguaje.getPosEncontrada() == Integer.parseInt(th.substring(th.indexOf('.') + 1))/*3*/) {
-				return Lenguaje.respuesta_tiempo_hasta(msj);
+				return "@" + this.user + Lenguaje.respuesta_tiempo_hasta(msj);
 			}
 			
 		}

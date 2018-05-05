@@ -120,10 +120,10 @@ public class Lenguaje {
 	
 	public static String respuesta_dia_dentro_de(String msj) {
 		
-		if(sinTildes(msj).toUpperCase().contains("mes"))
+		if(sinTildes(msj).toUpperCase().contains("mes".toUpperCase()))
 			return "" + Fecha.mostrarFecha(Fecha.diaDentroDe(buscarCantDMA(msj), 1));
 		
-		if(sinTildes(msj).toUpperCase().contains("año"))
+		if(sinTildes(msj).toUpperCase().contains("año".toUpperCase()))
 			return "" + Fecha.mostrarFecha(Fecha.diaDentroDe(buscarCantDMA(msj), 2));
 		
 		return "" + Fecha.mostrarFecha(Fecha.diaDentroDe(buscarCantDMA(msj)));
@@ -131,24 +131,24 @@ public class Lenguaje {
 	
 	public static String respuesta_dia_hace(String msj) {
 		
-		if(sinTildes(msj).toUpperCase().contains("ayer"))
+		if(sinTildes(msj).toUpperCase().contains("ayer".toUpperCase()))
 			return "" + Fecha.mostrarFecha(Fecha.diaHace(1));
 		
-		if(sinTildes(msj).toUpperCase().contains("mes"))
+		if(sinTildes(msj).toUpperCase().contains("mes".toUpperCase()))
 			return "" + Fecha.mostrarFecha(Fecha.diaHace(buscarCantDMA(msj), 1));
 		
-		if(sinTildes(msj).toUpperCase().contains("año"))
+		if(sinTildes(msj).toUpperCase().contains("año".toUpperCase()))
 			return "" + Fecha.mostrarFecha(Fecha.diaHace(buscarCantDMA(msj), 2));
 		
 		return "" + Fecha.mostrarFecha(Fecha.diaHace(buscarCantDMA(msj)));
 	}
 	
 	public static String respuesta_tiempo_desde(String msj) {
-		return "" + Fecha.tiempoDesde(buscarFecha(msj));
+		return " entre el " + Fecha.mostrarFecha(buscarFecha(msj)) + " y el " + Fecha.mostrarFecha(new Date()) + " pasaron " + Fecha.tiempoDesde(buscarFecha(msj)) + " día/s";
 	}
 	
 	public static String respuesta_tiempo_hasta(String msj) {
-		return "" + Fecha.tiempoHasta(buscarFecha(msj));
+		return " falta/n " + Fecha.tiempoHasta(buscarFecha(msj)) + " día/s";
 	}
 	
 	
@@ -159,7 +159,7 @@ public class Lenguaje {
 	private static int buscarCantDMA(String msj) {
 		String num = "";
 		for(int i = 0; i < msj.length(); i++) {
-			while(i < msj.length() && (msj.charAt(i) > '0' && msj.charAt(i) < '9')) {
+			while(i < msj.length() && (msj.charAt(i) >= '0' && msj.charAt(i) <= '9')) {
 				num += msj.charAt(i);
 				i++;
 			}
@@ -175,14 +175,14 @@ public class Lenguaje {
 		String año = "";
 		for(int i = 0; i < msj.length(); i++) {
 			if(!bandAño) {
-				while(i < msj.length() && (msj.charAt(i) > '0' && msj.charAt(i) < '9')) {
+				while(i < msj.length() && (msj.charAt(i) >= '0' && msj.charAt(i) <= '9')) {
 					dia += msj.charAt(i);
 					i++;
 					bandAño = true;
 				}	
 			}
 			else {
-				while(i < msj.length() && (msj.charAt(i) > '0' && msj.charAt(i) < '9')) {
+				while(i < msj.length() && (msj.charAt(i) >= '0' && msj.charAt(i) <= '9')) {
 					año += msj.charAt(i);
 					i++;
 				}

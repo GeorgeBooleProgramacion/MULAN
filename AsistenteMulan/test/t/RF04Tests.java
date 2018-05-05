@@ -28,12 +28,12 @@ public class RF04Tests {
 			);
 		
 		Assert.assertEquals(
-				"@jmm96 será el viernes 1 de junio de 2018",
+				"@jmm96 será el domingo 5 de agosto de 2018",
 				mulan.charlar("@mulan qué día será dentro de 3 meses?")
 			);
 		
 		Assert.assertEquals(
-				"@jmm96 será el miércoles 1 de abril de 2020",
+				"@jmm96 será el lunes 4 de mayo de 2020",
 				mulan.charlar("@mulan qué día será dentro de 2 años?")
 			);
 	}
@@ -41,22 +41,22 @@ public class RF04Tests {
 	@Test
 	public void diaHace() {
 		Assert.assertEquals(
-				"@jmm96 fue sábado 31 de marzo de 2018",
+				"@jmm96 fue viernes 4 de mayo de 2018",
 				mulan.charlar("@mulan qué día fue ayer?")
 			);
 		
 		Assert.assertEquals(
-				"@jmm96 fue jueves 29 de marzo de 2018",
+				"@jmm96 fue miércoles 2 de mayo de 2018",
 				mulan.charlar("@mulan qué día fue hace 3 días?")
 			);
 		
 		Assert.assertEquals(
-				"@jmm96 fue el jueves 1 de febrero de 2018",
+				"@jmm96 fue lunes 5 de marzo de 2018",
 				mulan.charlar("@mulan qué día fue hace 2 meses?")
 			);
 		
 		Assert.assertEquals(
-				"@jmm96 fue el viernes 1 de abril de 2016",
+				"@jmm96 fue jueves 5 de mayo de 2016",
 				mulan.charlar("@mulan qué día fue hace 2 años?")
 			);
 	}
@@ -64,8 +64,8 @@ public class RF04Tests {
 	@Test
 	public void tiempoDesde() {
 		Assert.assertEquals(
-				"@jmm96 entre el 1 de abril de 2017 y el 1 de abril de 2018 pasaron 365 días",
-				mulan.charlar("@mulan cuántos días pasaron desde el 1 de abril de 2017?")
+				"@jmm96 entre el viernes 5 de mayo de 2017 y el sábado 5 de mayo de 2018 pasaron 365 día/s",
+				mulan.charlar("@mulan cuántos días pasaron desde el 5 de mayo de 2017?")
 			);
 		
 		// agregar casos de prueba
@@ -74,8 +74,8 @@ public class RF04Tests {
 	@Test
 	public void tiempoHasta() {
 		Assert.assertEquals(
-				"@jmm96 faltan 9 días",
-				mulan.charlar("@mulan cuántos días faltan para el 10 de abril?")
+				"@jmm96 falta/n 5 día/s",
+				mulan.charlar("@mulan cuántos días faltan para el 10 de mayo?")
 			);
 		
 		// agregar casos de prueba
