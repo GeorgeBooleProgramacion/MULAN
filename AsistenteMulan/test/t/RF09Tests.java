@@ -35,7 +35,7 @@ public final static String USUARIO = "lna96";
 	}
 	
 	private boolean respuestas(String msj) {
-		String[] resp = { "Si deberias llevarlo, @lna96", "Para no mojarte seria lo ideal, @lna96", "No es necesario hoy, @lna96", "No, @lna96" };
+		String[] resp = { "Si deberias llevarlo, @lna96", "Para no mojarte seria lo ideal, @lna96", "No es necesario hoy, @lna96", "No, @lna96", "Ups... Ocurrio un error en el servidor, @lna96" };
 		for(int i = 0; i < resp.length; i++) {
 			if(msj.equals(resp[i])) {
 				return true;
