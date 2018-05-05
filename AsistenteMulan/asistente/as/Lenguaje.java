@@ -136,7 +136,7 @@ public class Lenguaje {
 		}
 		else {
 				if(horaNormal == 12) 
-					return REG_AMD[2] + " " + timeMediodia + " M.";
+					return REG_AMD[2] + " " + timeMediodia + " PM";
 //				La hora de las doce del mediodía se expresa mejor como 12:00 m. (con punto),
 //				como indica el Diccionario panhispánico de dudas. 
 //				La razón es que el mediodía marca la frontera entre la mañana y la tarde, 
