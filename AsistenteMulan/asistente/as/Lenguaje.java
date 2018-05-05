@@ -117,11 +117,12 @@ public class Lenguaje {
 		String anio = Integer.toString(c1.get(Calendar.YEAR));
 		String dayOfWeek = c1.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, new Locale("es","ES"));
 		String month = c1.getDisplayName(Calendar.MONTH, Calendar.LONG, new Locale("es","ES"));
-		String hour = Integer.toString(c1.get(Calendar.HOUR));
-		int horaNormal = c1.get(Calendar.AM);
+		Integer hour = (c1.get(Calendar.HOUR));
+		int horaNormal = c1.get(Calendar.HOUR_OF_DAY);
 		String min = Integer.toString(c1.get(Calendar.MINUTE));
 		String time = String.format("%s:%s",hour,min);
-		if(msj.toUpperCase().contains("QUE DIA ES HOY") || msj.toUpperCase().contains("HOY")) {
+		String timeMediodia = String.format("%d:%s",horaNormal,min);
+		if(msj.toUpperCase().contains("Dia de la semana") || msj.toUpperCase().contains("HOY")) {
 			return REG_AMD[0] + " " + dayOfWeek ;		
 		}
 		if(msj.toUpperCase().contains("EN QUE MES ESTAMOS")) {
@@ -134,11 +135,20 @@ public class Lenguaje {
 			return REG_AMD[3] + " " + anio;		
 		}
 		else {
-				if(horaNormal == 0)
-				return REG_AMD[2] + " " + time + " AM";
+				if(horaNormal == 12) 
+					return REG_AMD[2] + " " + timeMediodia + " M.";
+//				La hora de las doce del mediodía se expresa mejor como 12:00 m. (con punto),
+//				como indica el Diccionario panhispánico de dudas. 
+//				La razón es que el mediodía marca la frontera entre la mañana y la tarde, 
+//				y a la inversa en la medianoche, por lo que 12:00 p. m. (y 12:00 a. m.) 
+//				podría interpretarse de ambos modos.
+				
+				if(horaNormal > 12)
+					return REG_AMD[2] + " " + time + " PM";
 				else
-				return REG_AMD[2] + " " + time + " PM";
-				}	
+					return REG_AMD[2] + " " + time + " AM";
+				
+			 }	
 		
 	}
 

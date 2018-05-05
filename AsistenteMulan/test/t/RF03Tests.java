@@ -30,7 +30,7 @@ public class RF03Tests {
 		};
 		for (String mensaje : mensajes) {
 			Assert.assertEquals(
-					"@delucas son las 11:12 PM",
+					"@delucas son las 1:11 AM",
 					mulan.charlar(mensaje)
 			);
 		}
@@ -46,7 +46,7 @@ public class RF03Tests {
 		
 		for (String mensaje : mensajes) {
 			Assert.assertEquals(
-					"@delucas hoy es 4 de mayo de 2018",
+					"@delucas hoy es 5 de mayo de 2018",
 					mulan.charlar(mensaje)
 			);
 		}
@@ -61,7 +61,7 @@ public class RF03Tests {
 		};
 		for (String mensaje : mensajes) {
 			Assert.assertEquals(
-					"@delucas hoy es viernes",
+					"@delucas hoy es sábado",
 					mulan.charlar(mensaje)
 			);
 		}
