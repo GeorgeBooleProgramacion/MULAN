@@ -1,5 +1,8 @@
 package as;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 public class Lenguaje {
 
 	private static final String[] REG_SLD = { "Hola", "Buen día", "Buenas tardes", // Saludos
@@ -24,7 +27,20 @@ public class Lenguaje {
 	
 	private static final String[] REG_RSB = { "Si", "No", "Por supuesto", "Claro que no" }; // Respuestas booleanas
 
+	private static final String[] REG_FEC = {"Qué día es hoy", "qué día es", "Que fecha es hoy","Que hora es","En que fecha estamos",
+			 "En que mes estamos","En que año estamos", "Fecha", "qué día de la semana es hoy", "Hora"};//Preguntas sobre la fecha
+
+	private static final String[] REG_AMD = {"hoy es","La fecha de hoy es","son las","El año actual es",
+			 "Nos encontramos en el mes de"};//Respuestas sobre la fecha
+	
 	public static int conocido(String msj) {
+		
+		for(int i = 0; i < REG_FEC.length; i++) {
+			if(sinTildes(msj).toUpperCase().contains(sinTildes(REG_FEC[i]).toUpperCase())) {
+					return 5; 
+			}
+		}
+		
 		for (int i = 0; i < REG_SLD.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_SLD[i]).toUpperCase())) {
 				return 1; // Saludar
@@ -47,9 +63,10 @@ public class Lenguaje {
 		}
 		for (int i = 0; i < REG_PE.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_PE[i]).toUpperCase())) {
-				return 4; // Si le digo de nada, no dice nada
+				return 4; 
 			}
 		}
+		
 		return -1; // No entender
 	}
 
@@ -91,6 +108,38 @@ public class Lenguaje {
 
 	public static String respuestas_estado() {
 		return REG_RSE[(int) (Math.random() * (REG_RSE.length))];
+	}
+	
+	public static String respuestas_fecha(String msj) {
+		Calendar c1 = Calendar.getInstance();
+		String dia = Integer.toString(c1.get(Calendar.DATE));
+		String mes = Integer.toString(c1.get(Calendar.MONTH)+1);
+		String anio = Integer.toString(c1.get(Calendar.YEAR));
+		String dayOfWeek = c1.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, new Locale("es","ES"));
+		String month = c1.getDisplayName(Calendar.MONTH, Calendar.LONG, new Locale("es","ES"));
+		String hour = Integer.toString(c1.get(Calendar.HOUR));
+		int horaNormal = c1.get(Calendar.AM);
+		String min = Integer.toString(c1.get(Calendar.MINUTE));
+		String time = String.format("%s:%s",hour,min);
+		if(msj.toUpperCase().contains("QUE DIA ES HOY") || msj.toUpperCase().contains("HOY")) {
+			return REG_AMD[0] + " " + dayOfWeek ;		
+		}
+		if(msj.toUpperCase().contains("EN QUE MES ESTAMOS")) {
+			return REG_AMD[4] + " " + month;		
+		}
+		if(msj.toUpperCase().contains("QUÉ DÍA ES") || msj.toUpperCase().contains("FECHA")) {
+			return REG_AMD[0] + " " + dia + " de" + " " + month + " de" + " " + anio ;		
+		}
+		if(msj.toUpperCase().contains("EN QUE AÑO ESTAMOS")) {
+			return REG_AMD[3] + " " + anio;		
+		}
+		else {
+				if(horaNormal == 0)
+				return REG_AMD[2] + " " + time + " AM";
+				else
+				return REG_AMD[2] + " " + time + " PM";
+				}	
+		
 	}
 
 }

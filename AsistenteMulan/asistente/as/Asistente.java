@@ -8,12 +8,15 @@ public class Asistente {
 		this.name = n;
 		this.user = u;
 	}
-
+	
+	
+	
 	private static final int DESPEDIR = 0;
 	private static final int SALUDAR = 1;
 	private static final int AGRADECER = 2;
 	private static final int DE_NADA = 3;
 	private static final int RESPUESTA_ESTADO = 4;
+	private static final int RESPUESTA_FECHA = 5;
 	private static final int NO_ENTENDER = -1;
 
 	public String charlar(String msj) {
@@ -28,6 +31,8 @@ public class Asistente {
 				return responder(RESPUESTA_ESTADO);
 			if (Lenguaje.conocido(msj) == DESPEDIR)
 				return responder(DESPEDIR);
+			if (Lenguaje.conocido(msj) == RESPUESTA_FECHA)
+				return responderFecha(msj);
 			return responder(NO_ENTENDER);
 		}
 		return null;
@@ -51,6 +56,10 @@ public class Asistente {
 			return Lenguaje.respuestas_estado() + ", @" + this.user;
 		}
 		return Lenguaje.no_entendidos() + ", @" + this.user;
+	}
+	
+	private String responderFecha(String msj) {
+		return "@" + this.user + " " + Lenguaje.respuestas_fecha(msj);
 	}
 
 }
