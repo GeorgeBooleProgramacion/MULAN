@@ -1,6 +1,8 @@
 package as;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class Fecha {
 	
@@ -8,11 +10,22 @@ public class Fecha {
 	private static final int PREGUNTAXAÑO = 2;
 	
 	private static final Date HOY = new Date();
+	private static final Calendar C1 = Calendar.getInstance();
+	private static final String DI = Integer.toString(C1.get(Calendar.DATE));
+	private static final String ME = Integer.toString(C1.get(Calendar.MONTH)+1);
+	private static final String AN = Integer.toString(C1.get(Calendar.YEAR));
+	private static final String DAYOFWEEK = C1.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, new Locale("es","ES"));
+	private static final String MONTH = C1.getDisplayName(Calendar.MONTH, Calendar.LONG, new Locale("es","ES"));
+	private static final Integer HOUR = (C1.get(Calendar.HOUR));
+	private static final int HORANORMAL = C1.get(Calendar.HOUR_OF_DAY);
+	private static final String MIN = Integer.toString(C1.get(Calendar.MINUTE));
+	private static final String TIME = String.format("%s:%s",HOUR,MIN);
+	private static final String TIMEMEDIODIA = String.format("%d:%s",HORANORMAL,MIN);
 	
-	private static final String[] DIA = { "domingo", "lunes", "martes", "miércoles", "jueves",
+	private static final String[] DIAS_SEMANA = { "domingo", "lunes", "martes", "miércoles", "jueves",
 			 							  "viernes", "sábado"};
 	
-	private static final String[] MES = { "enero" , "febrero" , "marzo" , "abril" , "mayo" , "junio" , 
+	private static final String[] MESES_AÑO = { "enero" , "febrero" , "marzo" , "abril" , "mayo" , "junio" , 
 			  							  "julio" , "agosto" , "septiembre" , "octubre" , 
 			  							  "noviembre" , "diciembre"};
 	
@@ -137,7 +150,38 @@ public class Fecha {
 	}
 	
 	public static String mostrarFecha(Date d) {
-		return "" + DIA[d.getDay()] + " " + d.getDate() + " de " + MES[d.getMonth()] + " de " + (d.getYear()+1900);
+		return "" + DIAS_SEMANA[d.getDay()] + " " + d.getDate() + " de " + MESES_AÑO[d.getMonth()] + " de " + (d.getYear()+1900);
 	}
+	
+	public static String diaDeLaSemana() {
+		return DAYOFWEEK ;
+	}
+	
+	public static String mesActual() {
+		return MONTH;
+	}
+	
+	public static String diaActual() {
+		return DI + " de" + " " + MONTH + " de" + " " + AN;
+	}
+	
+	public static String añoActual() {
+		return AN;	
+	}
+	
+	public static String horaActual() {
+		if(HORANORMAL == 12) 
+			return TIMEMEDIODIA + " PM";
+//		La hora de las doce del mediodía se expresa mejor como 12:00 m. (con punto),
+//		como indica el Diccionario panhispánico de dudas. 
+//		La razón es que el mediodía marca la frontera entre la mañana y la tarde, 
+//		y a la inversa en la medianoche, por lo que 12:00 p. m. (y 12:00 a. m.) 
+//		podría interpretarse de ambos modos.
+		if(HORANORMAL > 12)
+			return TIME + " PM";
+		else
+			return TIME + " AM";
+		
+	 }	
 
 }

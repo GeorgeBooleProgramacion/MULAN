@@ -14,6 +14,7 @@ public class GeneralTests {
 	int cantDias;
 	double numerito;
 	String palabrita;
+	String[] str = {"hola", "como", "estas", "|", "bien", "por", "suerte"};
 	
 	@SuppressWarnings("deprecation")
 	@Before
@@ -23,7 +24,7 @@ public class GeneralTests {
 		d.setMonth(4);
 		d.setYear(118);
 		cantDias = 4;
-		numerito = 5.0;
+		numerito = 5.11;
 		palabrita = "hólá gátó";
 	}
 	
@@ -77,6 +78,18 @@ public class GeneralTests {
 		palabrita.replace('ó', 'o');
 		palabrita.replace('ú', 'u');
 		System.out.println(palabrita);
+	}
+	
+	@Test
+	public void probandoRecorridoHastaCaracter() {
+		int i = 0;
+		while(str[i] != "|") {
+			System.out.println(str[i]);
+			i++;
+		}
+		for(i++; i < str.length; i++) {
+			System.out.println(str[i]);
+		}
 	}
 	
 }

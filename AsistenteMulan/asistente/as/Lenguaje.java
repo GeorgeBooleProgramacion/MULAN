@@ -1,6 +1,11 @@
 package as;
 
+//<<<<<<< HEAD
 import java.util.Date;
+/*=======
+import java.util.Calendar;
+import java.util.Locale;
+>>>>>>> horario*/
 
 public class Lenguaje {
 	
@@ -27,9 +32,12 @@ public class Lenguaje {
 											  "Excelente", "No podria estar mejor" };
 	
 	private static final String[] REG_RSB = { "Si", "No", "Por supuesto", "Claro que no" }; // Respuestas booleanas
+//<<<<<<< HEAD
 	
-	private static final String[] REG_FCH = { "Qué día será" , "Qué día fué" ,
-											  "Cuántos días pasaron" , "Cuántos días faltan"}; //Preguntas sobre fecha
+	private static final String[] REG_FCH = { "Qué día será", "Qué día fué", "Cuántos días pasaron", "Cuántos días faltan", 
+											  "Qué día es", "Que fecha es hoy", "Hoy es", "Fecha",
+											  "Que hora es", "Hora", "Hora", "En que mes estamos", "En que año estamos", 
+											  "día de la semana"}; //Preguntas sobre fecha
 	
 	private static final String[] REG_MES = { "Enero" , "Febrero" , "Marzo" , "Abril" , "Mayo" , "Junio" , 
 											  "Julio" , "Agosto" , "Septiembre" , "Octubre" , 
@@ -37,8 +45,23 @@ public class Lenguaje {
 	
 	private static final String[] REG_DIA = { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes",
 											  "Sábado", "Domingo"};
+/*=======
+
+	private static final String[] REG_FEC = {"Qué día es hoy", "qué día es", "Que fecha es hoy","Que hora es","En que fecha estamos",
+			 "En que mes estamos","En que año estamos", "Fecha", "qué día de la semana es hoy", "Hora"};//Preguntas sobre la fecha*/
+
+	private static final String[] REG_AMD = {"hoy es","La fecha de hoy es","son las","El año actual es",
+			 "Nos encontramos en el mes de"};//Respuestas sobre la fecha
+//>>>>>>> horario
 	
 	public static int conocido(String msj) {
+		
+		/*for(int i = 0; i < REG_FEC.length; i++) {
+			if(sinTildes(msj).toUpperCase().contains(sinTildes(REG_FEC[i]).toUpperCase())) {
+					return 5; 
+			}
+		}*/
+		
 		for (int i = 0; i < REG_SLD.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_SLD[i]).toUpperCase())) {
 				posEncontrada = i;
@@ -72,7 +95,7 @@ public class Lenguaje {
 		for (int i = 0; i < REG_FCH.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_FCH[i]).toUpperCase())) {
 				posEncontrada = i;
-				return 5; // Si le digo de nada, no dice nada
+				return 5;
 			}
 		}
 		return -1; // No entender
@@ -118,6 +141,7 @@ public class Lenguaje {
 		return REG_RSE[(int) (Math.random() * (REG_RSE.length))];
 	}
 	
+//<<<<<<< HEAD
 	public static String respuesta_dia_dentro_de(String msj) {
 		
 		if(sinTildes(msj).toUpperCase().contains("mes".toUpperCase()))
@@ -149,6 +173,26 @@ public class Lenguaje {
 	
 	public static String respuesta_tiempo_hasta(String msj) {
 		return " falta/n " + Fecha.tiempoHasta(buscarFecha(msj)) + " día/s";
+	}
+	
+	public static String respuesta_dia_hoy() {
+		return REG_AMD[0] + " " + Fecha.diaActual();
+	}
+	
+	public static String respuesta_dia_semana() {
+		return REG_AMD[0] + " " + Fecha.diaDeLaSemana() ;
+	}
+	
+	public static String respuesta_mes_actual() {
+		return REG_AMD[4] + " " + Fecha.mesActual();
+	}
+	
+	public static String respuesta_año_actual() {
+		return REG_AMD[3] + " " + Fecha.añoActual();	
+	}
+	
+	public static String respuesta_hora_actual() {
+		return REG_AMD[2] + " " + Fecha.horaActual();
 	}
 	
 	
@@ -199,5 +243,57 @@ public class Lenguaje {
 		
 		return d;
 	}
+//=======
+/*	public static String respuestas_fecha(String msj) {
+		Calendar c1 = Calendar.getInstance();
+		String dia = Integer.toString(c1.get(Calendar.DATE));
+		String mes = Integer.toString(c1.get(Calendar.MONTH)+1);
+		String anio = Integer.toString(c1.get(Calendar.YEAR));
+		String dayOfWeek = c1.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, new Locale("es","ES"));
+		String month = c1.getDisplayName(Calendar.MONTH, Calendar.LONG, new Locale("es","ES"));
+		Integer hour = (c1.get(Calendar.HOUR));
+		int horaNormal = c1.get(Calendar.HOUR_OF_DAY);
+		String min = Integer.toString(c1.get(Calendar.MINUTE));
+		String time = String.format("%s:%s",hour,min);
+		String timeMediodia = String.format("%d:%s",horaNormal,min);
+		if(msj.toUpperCase().contains("DIA DE LA SEMANA") || msj.toUpperCase().contains("HOY")) {
+			return REG_AMD[0] + " " + dayOfWeek ;		
+		}
+		if(msj.toUpperCase().contains("EN QUE MES ESTAMOS")) {
+			return REG_AMD[4] + " " + month;		
+		}
+		if(msj.toUpperCase().contains("QUÉ DÍA ES HOY") || msj.toUpperCase().contains("FECHA")) {
+			return REG_AMD[0] + " " + dia + " de" + " " + month + " de" + " " + anio ;		
+		}
+		if(msj.toUpperCase().contains("EN QUE AÑO ESTAMOS")) {
+			return REG_AMD[3] + " " + anio;		
+		}
+		else {
+				if(horaNormal == 12) 
+					return REG_AMD[2] + " " + timeMediodia + " PM";
+//				La hora de las doce del mediodía se expresa mejor como 12:00 m. (con punto),
+//				como indica el Diccionario panhispánico de dudas. 
+//				La razón es que el mediodía marca la frontera entre la mañana y la tarde, 
+//				y a la inversa en la medianoche, por lo que 12:00 p. m. (y 12:00 a. m.) 
+//				podría interpretarse de ambos modos.
+				
+				if(horaNormal > 12)
+					return REG_AMD[2] + " " + time + " PM";
+				else
+					return REG_AMD[2] + " " + time + " AM";
+				
+			 }	
+		
+//>>>>>>> horario*/
 
 }
+
+
+
+
+
+
+
+
+
+
