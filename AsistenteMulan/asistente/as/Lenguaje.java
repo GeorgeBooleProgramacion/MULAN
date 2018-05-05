@@ -1,6 +1,10 @@
 package as;
 
+import java.util.Date;
+
 public class Lenguaje {
+	
+	private static int posEncontrada;
 
 	private static final String[] REG_SLD = { "Hola", "Buen día", "Buenas tardes", // Saludos
 											  "Buenas noches", "Buenas", "Holanda", "Hey" };
@@ -23,31 +27,52 @@ public class Lenguaje {
 											  "Excelente", "No podria estar mejor" };
 	
 	private static final String[] REG_RSB = { "Si", "No", "Por supuesto", "Claro que no" }; // Respuestas booleanas
-
+	
+	private static final String[] REG_FCH = { "Qué día será" , "Qué día fué" ,
+											  "Cuántos días pasaron" , "Cuántos días faltan"}; //Preguntas sobre fecha
+	
+	private static final String[] REG_MES = { "Enero" , "Febrero" , "Marzo" , "Abril" , "Mayo" , "Junio" , 
+											  "Julio" , "Agosto" , "Septiembre" , "Octubre" , 
+											  "Noviembre" , "Diciembre"};
+	
+	private static final String[] REG_DIA = { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes",
+											  "Sábado", "Domingo"};
+	
 	public static int conocido(String msj) {
 		for (int i = 0; i < REG_SLD.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_SLD[i]).toUpperCase())) {
+				posEncontrada = i;
 				return 1; // Saludar
 			}
 		}
 		for (int i = 0; i < REG_DSP.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_DSP[i]).toUpperCase())) {
+				posEncontrada = i;
 				return 0; // Despedir
 			}
 		}
 		for (int i = 0; i < REG_AGR.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_AGR[i]).toUpperCase())) {
+				posEncontrada = i;
 				return 3; // De nada
 			}
 		}
 		for (int i = 0; i < REG_DN.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_DN[i]).toUpperCase())) {
+				posEncontrada = i;
 				return -2; // Si le digo de nada, no dice nada
 			}
 		}
 		for (int i = 0; i < REG_PE.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_PE[i]).toUpperCase())) {
+				posEncontrada = i;
 				return 4; // Si le digo de nada, no dice nada
+			}
+		}
+		for (int i = 0; i < REG_FCH.length; i++) {
+			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_FCH[i]).toUpperCase())) {
+				posEncontrada = i;
+				return 5; // Si le digo de nada, no dice nada
 			}
 		}
 		return -1; // No entender
@@ -56,15 +81,15 @@ public class Lenguaje {
 	private static String sinTildes(String msj) {
 		for (int i = 0; i < msj.length(); i++) {
 			if (msj.charAt(i) == 'á')
-				msj.replace('á', 'a');
+				msj = msj.replace('á', 'a');
 			if (msj.charAt(i) == 'é')
-				msj.replace('é', 'e');
+				msj = msj.replace('é', 'e');
 			if (msj.charAt(i) == 'í')
-				msj.replace('í', 'i');
+				msj = msj.replace('í', 'i');
 			if (msj.charAt(i) == 'ó')
-				msj.replace('ó', 'o');
+				msj = msj.replace('ó', 'o');
 			if (msj.charAt(i) == 'ú')
-				msj.replace('ú', 'u');
+				msj = msj.replace('ú', 'u');
 		}
 		return msj;
 	}
@@ -91,6 +116,88 @@ public class Lenguaje {
 
 	public static String respuestas_estado() {
 		return REG_RSE[(int) (Math.random() * (REG_RSE.length))];
+	}
+	
+	public static String respuesta_dia_dentro_de(String msj) {
+		
+		if(sinTildes(msj).toUpperCase().contains("mes"))
+			return "" + Fecha.mostrarFecha(Fecha.diaDentroDe(buscarCantDMA(msj), 1));
+		
+		if(sinTildes(msj).toUpperCase().contains("año"))
+			return "" + Fecha.mostrarFecha(Fecha.diaDentroDe(buscarCantDMA(msj), 2));
+		
+		return "" + Fecha.mostrarFecha(Fecha.diaDentroDe(buscarCantDMA(msj)));
+	}
+	
+	public static String respuesta_dia_hace(String msj) {
+		
+		if(sinTildes(msj).toUpperCase().contains("ayer"))
+			return "" + Fecha.mostrarFecha(Fecha.diaHace(1));
+		
+		if(sinTildes(msj).toUpperCase().contains("mes"))
+			return "" + Fecha.mostrarFecha(Fecha.diaHace(buscarCantDMA(msj), 1));
+		
+		if(sinTildes(msj).toUpperCase().contains("año"))
+			return "" + Fecha.mostrarFecha(Fecha.diaHace(buscarCantDMA(msj), 2));
+		
+		return "" + Fecha.mostrarFecha(Fecha.diaHace(buscarCantDMA(msj)));
+	}
+	
+	public static String respuesta_tiempo_desde(String msj) {
+		return "" + Fecha.tiempoDesde(buscarFecha(msj));
+	}
+	
+	public static String respuesta_tiempo_hasta(String msj) {
+		return "" + Fecha.tiempoHasta(buscarFecha(msj));
+	}
+	
+	
+	public static int getPosEncontrada() {
+		return posEncontrada;
+	}
+	
+	private static int buscarCantDMA(String msj) {
+		String num = "";
+		for(int i = 0; i < msj.length(); i++) {
+			while(i < msj.length() && (msj.charAt(i) > '0' && msj.charAt(i) < '9')) {
+				num += msj.charAt(i);
+				i++;
+			}
+		}
+		return Integer.valueOf(num);
+	}
+	
+	@SuppressWarnings("deprecation")
+	private static Date buscarFecha(String msj) {
+		boolean bandAño = false;
+		Date d = new Date();
+		String dia = "";
+		String año = "";
+		for(int i = 0; i < msj.length(); i++) {
+			if(!bandAño) {
+				while(i < msj.length() && (msj.charAt(i) > '0' && msj.charAt(i) < '9')) {
+					dia += msj.charAt(i);
+					i++;
+					bandAño = true;
+				}	
+			}
+			else {
+				while(i < msj.length() && (msj.charAt(i) > '0' && msj.charAt(i) < '9')) {
+					año += msj.charAt(i);
+					i++;
+				}
+			}
+		}
+		d.setDate(Integer.valueOf(dia));
+		if(año != "")
+			d.setYear(Integer.valueOf(año)-1900);
+		for(int i = 0; i < REG_MES.length; i++) {
+			if(sinTildes(msj).toUpperCase().contains(REG_MES[i].toUpperCase())) {
+				d.setMonth(i);
+			}
+		}
+		
+		return d;
 	}
 
 }

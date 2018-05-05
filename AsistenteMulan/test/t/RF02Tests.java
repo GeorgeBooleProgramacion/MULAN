@@ -23,7 +23,7 @@ public class RF02Tests {
 		String[] mensajes = {
 				"¡Muchas gracias, @mulan!",
 				"@mulan gracias",
-				"gracias @mulan"
+				"gracias @mulan, de verdad te lo agradezco"
 		};
 		for (String mensaje : mensajes) {
 			Assert.assertTrue(respuestas(rsp = mulan.charlar(mensaje)));
