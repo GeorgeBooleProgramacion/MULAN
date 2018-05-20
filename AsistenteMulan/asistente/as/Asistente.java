@@ -63,11 +63,7 @@ public class Asistente {
 			}
 			
 			return responderConversacion(NO_ENTENDER);
-			/*
-			if (Lenguaje.conocido(msj) == RESPUESTA_FECHA)
-				return responderFecha(msj);
-			return responderConversacion(NO_ENTENDER);
-			 */
+
 		}
 		
 		return null;

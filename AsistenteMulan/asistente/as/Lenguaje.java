@@ -105,6 +105,7 @@ public class Lenguaje {
 		}
 		for (int i = 0; i < REG_PC.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_PC[i]).toUpperCase())) {
+				posEncontrada = i;
 				return 9; //Clima
 			}
 		}
