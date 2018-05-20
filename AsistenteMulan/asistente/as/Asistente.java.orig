@@ -23,8 +23,6 @@ public class Asistente {
 	private static final int DE_NADA = 3;
 	private static final int RESPUESTA_ESTADO = 4;
 <<<<<<< HEAD
-	private static final int CLIMA = 9;
-=======
 	private static final int RESPUESTA_FECHA = 5;
 //<<<<<<< HEAD
 	private static final double RSP_DIADENTRODE = 5.0;
@@ -38,7 +36,9 @@ public class Asistente {
 	private static final double RSP_DIASEMAN = 5.13;
 //=======
 //>>>>>>> horario
->>>>>>> origin/master
+=======
+	private static final int CLIMA = 9;
+>>>>>>> apiClima
 	private static final int NO_ENTENDER = -1;
 
 	public String charlar(String msj) {
@@ -57,13 +57,13 @@ public class Asistente {
 			
 			if (Lenguaje.conocido(msj) == RESPUESTA_ESTADO)
 <<<<<<< HEAD
+				return responderConversacion(RESPUESTA_ESTADO);
+			
+=======
 				return responder(RESPUESTA_ESTADO);
 			if (Lenguaje.conocido(msj) == CLIMA)
 				return responder(CLIMA);
-=======
-				return responderConversacion(RESPUESTA_ESTADO);
-			
->>>>>>> origin/master
+>>>>>>> apiClima
 			if (Lenguaje.conocido(msj) == DESPEDIR)
 //<<<<<<< HEAD
 				return responderConversacion(DESPEDIR);
@@ -107,13 +107,6 @@ public class Asistente {
 			return Lenguaje.respuestas_estado() + ", @" + this.user;
 		}
 <<<<<<< HEAD
-		if (rsp == CLIMA) {
-			Clima clima = new Clima();
-			ServicioClima srv = new ServicioClima();
-			Boolean paraguas = srv.llevarParaguas("San Justo", "AR");
-			return Lenguaje.respuestas_clima(paraguas) + ", @" + this.user;
-		}
-=======
 		
 		if(rsp == RESPUESTA_FECHA) {
 			String ddd = String.valueOf(RSP_DIADENTRODE/*0*/), dh = String.valueOf(RSP_DIAHACE/*1*/), 
@@ -167,7 +160,14 @@ public class Asistente {
 			
 		}
 		
->>>>>>> origin/master
+=======
+		if (rsp == CLIMA) {
+			Clima clima = new Clima();
+			ServicioClima srv = new ServicioClima();
+			Boolean paraguas = srv.llevarParaguas("San Justo", "AR");
+			return Lenguaje.respuestas_clima(paraguas) + ", @" + this.user;
+		}
+>>>>>>> apiClima
 		return Lenguaje.no_entendidos() + ", @" + this.user;
 	}
 	

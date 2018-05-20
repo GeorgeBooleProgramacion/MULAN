@@ -1,11 +1,10 @@
 package as;
 
-//<<<<<<< HEAD
 import java.util.Date;
-/*=======
+/*
 import java.util.Calendar;
 import java.util.Locale;
->>>>>>> horario*/
+*/
 
 public class Lenguaje {
 	
@@ -31,8 +30,13 @@ public class Lenguaje {
 	private static final String[] REG_RSE = { "Bien", "Muy bien", "Mal", "Pesimo", "Masomenos", "Perfecto", // Respuestas a las preguntas de estado																			
 											  "Excelente", "No podria estar mejor" };
 	
+	private static final String[] REG_PC = { "Hoy deberia llevar paraguas", "Llevo paraguas", "Es necesario el paraguas", "Paraguas" }; //Preguntas sobre el clima
+	
+	private static final String[] REG_RCT = { "Si deberias llevarlo", "Para no mojarte seria lo ideal" }; //Respuestas a preguntas del clima
+	
+	private static final String[] REG_RCF = { "No es necesario hoy", "No" }; //Respuestas a preguntas del clima
+	
 	private static final String[] REG_RSB = { "Si", "No", "Por supuesto", "Claro que no" }; // Respuestas booleanas
-//<<<<<<< HEAD
 	
 	private static final String[] REG_FCH = { "Qué día será", "Qué día fué", "Cuántos días pasaron", "Cuántos días faltan", 
 											  "Qué día es", "Que fecha es hoy", "Hoy es", "Fecha",
@@ -45,14 +49,15 @@ public class Lenguaje {
 	
 	private static final String[] REG_DIA = { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes",
 											  "Sábado", "Domingo"};
-/*=======
+	/*
 
 	private static final String[] REG_FEC = {"Qué día es hoy", "qué día es", "Que fecha es hoy","Que hora es","En que fecha estamos",
-			 "En que mes estamos","En que año estamos", "Fecha", "qué día de la semana es hoy", "Hora"};//Preguntas sobre la fecha*/
+			 "En que mes estamos","En que año estamos", "Fecha", "qué día de la semana es hoy", "Hora"};//Preguntas sobre la fecha
+	*/
 
 	private static final String[] REG_AMD = {"hoy es","La fecha de hoy es","son las","El año actual es",
 			 "Nos encontramos en el mes de"};//Respuestas sobre la fecha
-//>>>>>>> horario
+
 	
 	public static int conocido(String msj) {
 		
@@ -98,6 +103,11 @@ public class Lenguaje {
 				return 5;
 			}
 		}
+		for (int i = 0; i < REG_PC.length; i++) {
+			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_PC[i]).toUpperCase())) {
+				return 9; //Clima
+			}
+		}
 		return -1; // No entender
 	}
 
@@ -141,7 +151,7 @@ public class Lenguaje {
 		return REG_RSE[(int) (Math.random() * (REG_RSE.length))];
 	}
 	
-//<<<<<<< HEAD
+
 	public static String respuesta_dia_dentro_de(String msj) {
 		
 		if(sinTildes(msj).toUpperCase().contains("mes".toUpperCase()))
@@ -243,7 +253,7 @@ public class Lenguaje {
 		
 		return d;
 	}
-//=======
+
 /*	public static String respuestas_fecha(String msj) {
 		Calendar c1 = Calendar.getInstance();
 		String dia = Integer.toString(c1.get(Calendar.DATE));
@@ -284,7 +294,18 @@ public class Lenguaje {
 				
 			 }	
 		
-//>>>>>>> horario*/
+*/
+
+	public static String respuestas_clima(Boolean paraguas) {
+		if(paraguas != null) {
+			if(paraguas)
+				return REG_RCT[(int) (Math.random() * (REG_RCT.length))];
+			else
+				return REG_RCF[(int) (Math.random() * (REG_RCF.length))];
+		}
+		else
+			return "Ups... Ocurrio un error en el servidor";
+	}
 
 }
 

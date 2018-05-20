@@ -99,15 +99,15 @@ public class Lenguaje {
 			}
 		}
 <<<<<<< HEAD
-		for (int i = 0; i < REG_PC.length; i++) {
-			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_PC[i]).toUpperCase())) {
-				return 9; //Clima
-=======
 		for (int i = 0; i < REG_FCH.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_FCH[i]).toUpperCase())) {
 				posEncontrada = i;
 				return 5;
->>>>>>> origin/master
+=======
+		for (int i = 0; i < REG_PC.length; i++) {
+			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_PC[i]).toUpperCase())) {
+				return 9; //Clima
+>>>>>>> apiClima
 			}
 		}
 		return -1; // No entender
@@ -154,17 +154,6 @@ public class Lenguaje {
 	}
 	
 <<<<<<< HEAD
-	public static String respuestas_clima(Boolean paraguas) {
-		if(paraguas != null) {
-			if(paraguas)
-				return REG_RCT[(int) (Math.random() * (REG_RCT.length))];
-			else
-				return REG_RCF[(int) (Math.random() * (REG_RCF.length))];
-		}
-		else
-			return "Ups... Ocurrio un error en el servidor";
-	}
-=======
 //<<<<<<< HEAD
 	public static String respuesta_dia_dentro_de(String msj) {
 		
@@ -309,7 +298,18 @@ public class Lenguaje {
 			 }	
 		
 //>>>>>>> horario*/
->>>>>>> origin/master
+=======
+	public static String respuestas_clima(Boolean paraguas) {
+		if(paraguas != null) {
+			if(paraguas)
+				return REG_RCT[(int) (Math.random() * (REG_RCT.length))];
+			else
+				return REG_RCF[(int) (Math.random() * (REG_RCF.length))];
+		}
+		else
+			return "Ups... Ocurrio un error en el servidor";
+	}
+>>>>>>> apiClima
 
 }
 

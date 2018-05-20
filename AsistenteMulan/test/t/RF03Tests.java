@@ -30,7 +30,7 @@ public class RF03Tests {
 		};
 		for (String mensaje : mensajes) {
 			Assert.assertEquals(
-					"@delucas son las 13:23 AM",
+					"@delucas son las 8:45 PM",
 					mulan.charlar(mensaje)
 			);
 		}
