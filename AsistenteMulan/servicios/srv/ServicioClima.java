@@ -63,7 +63,7 @@ public class ServicioClima {
 	public Clima obtenerClimaTest(String ciudad, String pais) {
 
 		this.tiempoActual = Calendar.getInstance();
-		this.tiempoAnterior.add(Calendar.MINUTE, 1); // >>> CAMBIAR A 10 MINUTOS!!!
+		this.tiempoAnterior.add(Calendar.MINUTE, 1); // >>> SOLO PORQUE ES EL TEST ES 1 MIN
 
 		Clima clima = new Clima();
 
@@ -91,7 +91,7 @@ public class ServicioClima {
 
 		Clima clima = new Clima();
 		
-		clima = this.obtenerClima(ciudad, pais);
+		clima = this.obtenerClimaTest(ciudad, pais);		// MODIFICAR A obtenerClima() PARA USAR LA API EN LUGAR DE LA SIMULACION
 
 		String condicion = clima.getWeather().getMain();
 

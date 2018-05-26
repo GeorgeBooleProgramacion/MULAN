@@ -23,7 +23,7 @@ public final static String USUARIO = "lna96";
 		mulan = new Asistente("mulan", USUARIO);
 	}
 	
-	
+	/*
 	@Test
 	public void paraguas() {
 		String rsp = null;
@@ -43,7 +43,22 @@ public final static String USUARIO = "lna96";
 		}
 		return false;
 	}
+	*/
 	
+	@Test
+	public void paraguas() {
+		Clima clima = new Clima();
+		ServicioClima srv = new ServicioClima();
+		//String rsp = null;
+		Boolean paraguas = srv.llevarParaguas("San Justo", "AR");
+		if(paraguas != null) {
+			if(paraguas == true)
+				System.out.println("Si, te vas a cagar mojando sino @" + USUARIO);
+			else
+				System.out.println("Naaa, esta todo piola afuera @" + USUARIO);
+		}
+
+	}
 	
 
 }
