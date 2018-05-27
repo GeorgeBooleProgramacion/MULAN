@@ -57,6 +57,8 @@ public final static String USUARIO = "lna96";
 			else
 				System.out.println("Naaa, esta todo piola afuera @" + USUARIO);
 		}
+		else
+			System.out.println("Paciencia hermano! Espera 10 minutos antes de pedir el clima");
 
 	}
 	
