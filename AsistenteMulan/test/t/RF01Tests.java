@@ -34,8 +34,7 @@ public class RF01Tests {
 	}
 	
 	private boolean respuestas(String msj) {
-		String[] resp = { "Hola, @jmm96", "Buen día, @jmm96", "Buenas tardes, @jmm96",
-				  "Buenas noches, @jmm96", "Buenas, @jmm96", "Holanda, @jmm96", "Hey, @jmm96" };
+		String[] resp = { "Hola, @jmm96", "Buenas, @jmm96", "Hey, @jmm96" };
 		for(int i = 0; i < resp.length; i++) {
 			if(msj.equals(resp[i])) {
 				return true;

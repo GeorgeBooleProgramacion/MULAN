@@ -1,13 +1,13 @@
 package as;
 
 import java.util.Date;
+import java.util.regex.Pattern;
 
 public class Lenguaje {
 	
 	private static int posEncontrada;
 
-	private static final String[] REG_SLD = { "Hola", "Buen día", "Buenas tardes", // Saludos
-											  "Buenas noches", "Buenas", "Holanda", "Hey" };
+	private static final String[] REG_SLD = { "Hola", "Buenas", "Hey" }; //Saludos
 	
 	private static final String[] REG_DSP = { "Chau", "Hasta luego", "Nos vemos", // Despedidas
 											  "Hasta la proxima", "Adios" };
@@ -43,14 +43,28 @@ public class Lenguaje {
 	private static final String[] REG_AMD = {"hoy es","La fecha de hoy es","son las","El año actual es",
 			 "Nos encontramos en el mes de"};//Respuestas sobre la fecha
 	
+	
+	/*final String expresion = "(?:cuantas|cuantos|cuántos|cuántas) (\\w*) (?:son|hay en) (\\d+|.*) (\\w*)";
+	// 															    Grupo 1 				Grupo 2 Grupo 3
+	
+	final Pattern pattern = Pattern.compile(expresion); // compila la expresion regular y la guarda en pattern
+	final Matcher matcher = pattern.matcher(msj);       // realiza las operaciones de coincidencia de caracteres
+													    // intepretando la expresion regular cargada en pattern*/
+	
+	private static final Pattern EXP_SLD = Pattern.compile("(?i:hola|buen dia|buen día|buenas tardes|buenas noches|buenas|hey)");
+	
 	public static int conocido(String msj) {
 		
-		for (int i = 0; i < REG_SLD.length; i++) {
+		if(EXP_SLD.matcher(msj).find()) {
+			return 1;
+		}
+		
+		/*for (int i = 0; i < REG_SLD.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_SLD[i]).toUpperCase())) {
 				posEncontrada = i;
 				return 1; // Saludar
 			}
-		}
+		}*/
 		for (int i = 0; i < REG_DSP.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_DSP[i]).toUpperCase())) {
 				posEncontrada = i;
