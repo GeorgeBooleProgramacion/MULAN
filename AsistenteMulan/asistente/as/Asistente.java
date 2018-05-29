@@ -1,5 +1,7 @@
 package as;
 
+import java.util.regex.Pattern;
+
 public class Asistente {
 
 	private String name, user;

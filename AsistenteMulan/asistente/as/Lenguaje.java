@@ -51,44 +51,73 @@ public class Lenguaje {
 	final Matcher matcher = pattern.matcher(msj);       // realiza las operaciones de coincidencia de caracteres
 													    // intepretando la expresion regular cargada en pattern*/
 	
-	private static final Pattern EXP_SLD = Pattern.compile("(?i:hola|buen dia|buen día|buenas tardes|buenas noches|buenas|hey)");
+	
+	private static final Pattern EXP_SLD = Pattern.compile("(?i:hola|buen dia|buenas tardes|buenas noches|buenas|hey)");
+	private static final Pattern EXP_DSP = Pattern.compile("(?i:chau|hasta luego|nos vemos|hasta la proxima|adios)");
+	private static final Pattern EXP_NE = Pattern.compile("(?i:no comprendo|no entendi|disculpa...no entiendo el pedido)");
+	private static final Pattern EXP_AGR = Pattern.compile("(?i:gracias|te lo agradezco|muchas gracias|te agradezco)");
+	private static final Pattern EXP_DN = Pattern.compile("(?i:de nada|por nada|fue un placer|no es nada)");
+	private static final Pattern EXP_PE = Pattern.compile("(?i:como estas|como te va|como andas|como te encuentras)");
+	private static final Pattern EXP_RSE = Pattern.compile("(?i:bien|muy bien|mal|pesimo|masomenos|perfecto|excelente)");
+	private static final Pattern EXP_RSB = Pattern.compile("(?i:si|no|por supuesto|claro que no)");
+	private static final Pattern EXP_DDD = Pattern.compile(""); //Dia dentro de /0
+	private static final Pattern EXP_DH = Pattern.compile(""); //Dia hace /1
+	private static final Pattern EXP_TD = Pattern.compile(""); //Tiempo desde /2
+	private static final Pattern EXP_TH = Pattern.compile(""); //Tiempo hasta /3
+	private static final Pattern EXP_FH = Pattern.compile(""); //Fecha de hoy /4
+	private static final Pattern EXP_HA = Pattern.compile(""); //Hora actual /8
+	private static final Pattern EXP_MA = Pattern.compile(""); //Mes actual /11
+	private static final Pattern EXP_AA = Pattern.compile(""); //Año actual /12
+	private static final Pattern EXP_DS = Pattern.compile(""); //Dia de la semana /13
 	
 	public static int conocido(String msj) {
 		
-		if(EXP_SLD.matcher(msj).find()) {
+		if(EXP_SLD.matcher(sinTildes(msj)).find()) {
 			return 1;
 		}
-		
 		/*for (int i = 0; i < REG_SLD.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_SLD[i]).toUpperCase())) {
 				posEncontrada = i;
 				return 1; // Saludar
 			}
 		}*/
-		for (int i = 0; i < REG_DSP.length; i++) {
+		if(EXP_DSP.matcher(sinTildes(msj)).find()) {
+			return 0;
+		}
+		/*for (int i = 0; i < REG_DSP.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_DSP[i]).toUpperCase())) {
 				posEncontrada = i;
 				return 0; // Despedir
 			}
+		}*/
+		if(EXP_AGR.matcher(sinTildes(msj)).find()) {
+			return 3;
 		}
-		for (int i = 0; i < REG_AGR.length; i++) {
+		/*for (int i = 0; i < REG_AGR.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_AGR[i]).toUpperCase())) {
 				posEncontrada = i;
 				return 3; // De nada
 			}
+		}*/
+		if(EXP_DN.matcher(sinTildes(msj)).find()) {
+			return -2;
 		}
-		for (int i = 0; i < REG_DN.length; i++) {
+		/*for (int i = 0; i < REG_DN.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_DN[i]).toUpperCase())) {
 				posEncontrada = i;
 				return -2; // Si le digo de nada, no dice nada
 			}
+		}*/
+		if(EXP_PE.matcher(sinTildes(msj)).find()) {
+			return 4;
 		}
-		for (int i = 0; i < REG_PE.length; i++) {
+		/*for (int i = 0; i < REG_PE.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_PE[i]).toUpperCase())) {
 				posEncontrada = i;
 				return 4; // Si le digo de nada, no dice nada
 			}
-		}
+		}*/
+		
 		for (int i = 0; i < REG_FCH.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_FCH[i]).toUpperCase())) {
 				posEncontrada = i;
