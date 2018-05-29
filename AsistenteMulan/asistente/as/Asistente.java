@@ -10,15 +10,12 @@ public class Asistente {
 		this.user = u;
 	}
 	
-	
-	
 	private static final int DESPEDIR = 0;
 	private static final int SALUDAR = 1;
 	private static final int AGRADECER = 2;
 	private static final int DE_NADA = 3;
 	private static final int RESPUESTA_ESTADO = 4;
 	private static final int RESPUESTA_FECHA = 5;
-//<<<<<<< HEAD
 	private static final double RSP_DIADENTRODE = 5.0;
 	private static final double RSP_DIAHACE = 5.1;
 	private static final double RSP_TIEMPODESDE = 5.2;
@@ -28,8 +25,6 @@ public class Asistente {
 	private static final double RSP_MESACTUAL = 5.11;
 	private static final double RSP_AÑOACTUAL = 5.12;
 	private static final double RSP_DIASEMAN = 5.13;
-//=======
-//>>>>>>> horario
 	private static final int NO_ENTENDER = -1;
 
 	public String charlar(String msj) {
@@ -50,7 +45,6 @@ public class Asistente {
 				return responderConversacion(RESPUESTA_ESTADO);
 			
 			if (Lenguaje.conocido(msj) == DESPEDIR)
-//<<<<<<< HEAD
 				return responderConversacion(DESPEDIR);
 			
 			if(Lenguaje.conocido(msj) == RESPUESTA_FECHA) {
@@ -58,12 +52,6 @@ public class Asistente {
 			}
 			
 			return responderConversacion(NO_ENTENDER);
-/*=======
-				return responder(DESPEDIR);
-			if (Lenguaje.conocido(msj) == RESPUESTA_FECHA)
-				return responderFecha(msj);
-			return responder(NO_ENTENDER);
->>>>>>> horario*/
 		}
 		
 		return null;
@@ -147,11 +135,4 @@ public class Asistente {
 		return Lenguaje.no_entendidos() + ", @" + this.user;
 	}
 	
-//<<<<<<< HEAD
-/*=======
-	private String responderFecha(String msj) {
-		return "@" + this.user + " " + Lenguaje.respuestas_fecha(msj);
-	}
-
-//>>>>>>> horario*/
 }
