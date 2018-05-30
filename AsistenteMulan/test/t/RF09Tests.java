@@ -46,19 +46,22 @@ public final static String USUARIO = "lna96";
 	*/
 	
 	@Test
-	public void paraguas() {
-		Clima clima = new Clima();
-		ServicioClima srv = new ServicioClima();
-		//String rsp = null;
-		Boolean paraguas = srv.llevarParaguas("San Justo", "AR");
-		if(paraguas != null) {
+	public void paraguas() throws Exception {
+		try{
+			Clima clima = new Clima();
+			ServicioClima srv = new ServicioClima();
+			//String rsp = null;
+			Boolean paraguas = srv.llevarParaguas("San Justo", "AR");
+		
 			if(paraguas == true)
 				System.out.println("Si, te vas a cagar mojando sino @" + USUARIO);
 			else
 				System.out.println("Naaa, esta todo piola afuera @" + USUARIO);
-		}
-		else
+		}catch(Exception e) {
 			System.out.println("Paciencia hermano! Espera 10 minutos antes de pedir el clima");
+			throw new Exception ("Paciencia hermano! Espera 10 minutos antes de pedir el clima");
+			
+		}
 
 	}
 	
