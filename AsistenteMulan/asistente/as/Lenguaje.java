@@ -39,6 +39,8 @@ public class Lenguaje {
 	
 	private static final String[] REG_DIA = { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes",
 											  "Sábado", "Domingo"};
+	
+	private static final String REG_CG = "jugamos";
 
 	private static final String[] REG_AMD = {"hoy es","La fecha de hoy es","son las","El año actual es",
 			 "Nos encontramos en el mes de"};//Respuestas sobre la fecha
@@ -81,6 +83,7 @@ public class Lenguaje {
 				return 5;
 			}
 		}
+		
 		return -1; // No entender
 	}
 
