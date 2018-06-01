@@ -1,14 +1,70 @@
 package as;
 
-import java.util.Random;
-import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class MasChicoMasGrande {
+	
+	private static final int MAX = 100;
+	private static final int MIN = 1;
+	
+	private static int minimo_pienso = MIN;
+	private static int maximo_pienso = MAX;
+	private static int minimo_adivino;
+	private static int maximo_adivino;
+	private static int valor_adivino;
+	private static int valor_pienso = 0;
+	private static int cont = 0;
+	
+	public static void setValorAdivino(int n) {
+		valor_adivino = n;
+	}
+	
+	public static int getValorAdivino() {
+		return valor_adivino;
+	}
+	
+	public static String yoAdivino(int min, int max) {
+		minimo_adivino = min;
+		maximo_adivino = max;
+		valor_adivino = (int) (Math.random() * maximo_adivino + minimo_adivino);
+		return "¡listo!";
+	}
 
-	public static void maChiMaGra(String msj) throws InterruptedException {
+	public static String yoAdivino(int num) {
+		cont++;
+		if(num > valor_adivino) 
+			return "más chico";
+		if(num < valor_adivino) 
+			return "más grande";			
+	
+		return "¡si! Adivinaste en " + cont + " pasos...";
+		
+	}
+	
+	public static String yoPienso() {
+		return "¡sale y vale! Pensá un número del 1 al 100";
+	}
+	
+	public static String yoPienso(int CG) {
+		if(CG == 0) {
+			valor_pienso = ((maximo_pienso - minimo_pienso) / 2) + minimo_pienso;
+			return "¿es el " + valor_pienso + "?";
+		}
+		
+		if(CG == 1) {
+			minimo_pienso = valor_pienso;
+			valor_pienso = ((maximo_pienso - minimo_pienso) / 2) + minimo_pienso;
+			return "¿es el " + valor_pienso + "?";
+		}
+		if(CG == 2) {
+			maximo_pienso = valor_pienso;
+			valor_pienso = ((maximo_pienso - minimo_pienso) / 2) + minimo_pienso;
+			return "¿es el " + valor_pienso + "?";
+		}
+		minimo_pienso = MIN;
+		maximo_pienso = MAX;
+		return "fue divertido :)";
+	}
+
+	/*public static void maChiMaGra(String msj) throws InterruptedException {
 		
 		if (msj.matches(".*\\d+.*")) { // si encuentra un numero
 			adivinador(msj);
@@ -53,7 +109,7 @@ public class MasChicoMasGrande {
 			System.out.println("Ta dificilito man");
 		}
 	}
-
+	
 	
 	
 	public static void adivinado(String msj) throws InterruptedException {
@@ -94,5 +150,5 @@ public class MasChicoMasGrande {
 		} else {
 			System.out.println("Costo pero salio :)");
 		}
-	}
+	}*/
 }

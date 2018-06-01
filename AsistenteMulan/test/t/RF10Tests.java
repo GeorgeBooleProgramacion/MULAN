@@ -55,9 +55,11 @@ public class RF10Tests {
 	public void pensandoNumero() {
 		Assert.assertEquals(
 				"@jmm96 ¡listo!",
-				mulan.charlar("@mulan jugamos? Pensá un número del 1 al 100")
+				mulan.charlar("@mulan jugamos? Pensa un numero del 1 al 100")
 			);
 		
+		MasChicoMasGrande.setValorAdivino(12);
+	
 		Assert.assertEquals(
 				"@jmm96 más chico",
 				mulan.charlar("@mulan es el 50?")
@@ -70,9 +72,9 @@ public class RF10Tests {
 		
 	}
 	
-	@Test
+	/*@Test
 	public void asd() throws InterruptedException {
 		MasChicoMasGrande.maChiMaGra("Quiero jugar");
-	}
+	}*/
 
 }

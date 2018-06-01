@@ -25,6 +25,7 @@ public class Asistente {
 	private static final double RSP_MESACTUAL = 5.11;
 	private static final double RSP_AÑOACTUAL = 5.12;
 	private static final double RSP_DIASEMAN = 5.13;
+	private static final int MASCHICOMASGRANDE = 20;
 	private static final int NO_ENTENDER = -1;
 
 	public String charlar(String msj) {
@@ -49,6 +50,10 @@ public class Asistente {
 			
 			if(Lenguaje.conocido(msj) == RESPUESTA_FECHA) {
 				return responderConversacion(RESPUESTA_FECHA);
+			}
+			
+			if(Lenguaje.conocido(msj) == MASCHICOMASGRANDE) {
+				return responderConversacion(MASCHICOMASGRANDE);
 			}
 			
 			return responderConversacion(NO_ENTENDER);
@@ -78,6 +83,10 @@ public class Asistente {
 		
 		if (rsp == RESPUESTA_ESTADO) {
 			return Lenguaje.respuestas_estado() + ", @" + this.user;
+		}
+		
+		if(rsp == MASCHICOMASGRANDE) {
+			return "@" + this.user + " " + Lenguaje.masChicoMasGrande(this.msj);
 		}
 		
 		if(rsp == RESPUESTA_FECHA) {

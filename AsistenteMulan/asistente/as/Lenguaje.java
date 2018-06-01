@@ -1,10 +1,13 @@
 package as;
 
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Lenguaje {
 	
 	private static int posEncontrada;
+	private static boolean enJuego = false;
 
 	private static final String[] REG_SLD = { "Hola", "Buen día", "Buenas tardes", // Saludos
 											  "Buenas noches", "Buenas", "Holanda", "Hey" };
@@ -40,12 +43,16 @@ public class Lenguaje {
 	private static final String[] REG_DIA = { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes",
 											  "Sábado", "Domingo"};
 	
-	private static final String REG_CG = "jugamos";
+	private static final String[] REG_CG = {"Jugamos", "Mas chico mas grande", "Jugamos al mas chico mas grande", "Mas chico",
+											"Mas grande", "Es"};
 
 	private static final String[] REG_AMD = {"hoy es","La fecha de hoy es","son las","El año actual es",
 			 "Nos encontramos en el mes de"};//Respuestas sobre la fecha
 	
 	public static int conocido(String msj) {
+		
+		if(enJuego)
+			return 20;
 		
 		for (int i = 0; i < REG_SLD.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_SLD[i]).toUpperCase())) {
@@ -81,6 +88,13 @@ public class Lenguaje {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_FCH[i]).toUpperCase())) {
 				posEncontrada = i;
 				return 5;
+			}
+		}
+		
+		for (int i = 0; i < REG_CG.length; i++) {
+			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_CG[i]).toUpperCase())) {
+				posEncontrada = i;
+				return 20;
 			}
 		}
 		
@@ -180,8 +194,71 @@ public class Lenguaje {
 		return REG_AMD[2] + " " + Fecha.horaActual();
 	}
 	
-	public static String masChicoMasGrande() {
-		return REG_CG;
+	public static String masChicoMasGrande(String msj) {
+		Integer min, max;
+		if(!enJuego) {
+			Pattern exp_minMax = Pattern.compile("(?i:numero|valor) (?i:del|de) (\\d+) (?i:hasta|al) (\\d+)");
+			Pattern exp_yoAdi = Pattern.compile("(?i:pensa|piensa)");
+			Matcher minMax = exp_minMax.matcher(sinTildes(msj));
+			Matcher adivinar = exp_yoAdi.matcher(sinTildes(msj));
+			
+			if(adivinar.find() && minMax.find()) {
+				min = Integer.parseInt(minMax.group(1));	//Capturo de donde
+				max = Integer.parseInt(minMax.group(2));	//hasta donde quiero adivinar
+				enJuego = true;
+				return MasChicoMasGrande.yoAdivino(min,max);
+			}
+			
+			if(!adivinar.find()) {
+				enJuego = true;
+				return MasChicoMasGrande.yoPienso();
+			}
+		}
+		else {
+			Pattern exp_num = Pattern.compile("(?i:es el) (\\d+)");
+			Pattern exp_mcmg = Pattern.compile("(?i:mas) (\\w+)|(?i:si)|(?i:listo)");
+			Pattern exp_ready = Pattern.compile("(?i:listo)");
+			Pattern exp_win = Pattern.compile("(?i:si)");
+			Matcher numMtc = exp_num.matcher(sinTildes(msj));
+			Matcher mcmgMtc = exp_mcmg.matcher(sinTildes(msj));
+			Matcher readyMtc = exp_ready.matcher(sinTildes(msj));
+			Matcher winMtc = exp_win.matcher(sinTildes(msj));
+			
+			if(numMtc.find()) {
+				Integer num = Integer.parseInt(numMtc.group(1));
+				String adiRes = MasChicoMasGrande.yoAdivino(num);
+				if(adiRes.contains("Adivinaste"))
+					enJuego = false;
+				return adiRes;
+			}
+			
+			if(mcmgMtc.find()) {
+				String pieRes = ""; 
+				
+				if(readyMtc.find()) {
+					pieRes = MasChicoMasGrande.yoPienso(0);
+					return pieRes;
+				}
+				
+				if(mcmgMtc.group(1) != null && mcmgMtc.group(1).equals("grande")) {
+					pieRes = MasChicoMasGrande.yoPienso(1);
+					return pieRes;
+				}
+				
+				if(mcmgMtc.group(1) != null && mcmgMtc.group(1).equals("chico")) {
+					pieRes = MasChicoMasGrande.yoPienso(2);
+					return pieRes;
+				}
+				
+				if(winMtc.find()) {
+					enJuego = false;
+					pieRes = MasChicoMasGrande.yoPienso(-1);
+					return pieRes;
+				}
+			}	
+		}
+		
+		return no_entendidos();
 	}
 	
 	
