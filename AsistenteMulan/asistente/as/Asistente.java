@@ -26,11 +26,15 @@ public class Asistente {
 	private static final double RSP_AÑOACTUAL = 5.12;
 	private static final double RSP_DIASEMAN = 5.13;
 	private static final int NO_ENTENDER = -1;
+	private static final int CONVERSION = 6;
 
 	public String charlar(String msj) {
 		if (msj.contains("@" + this.name)) {
 			
 			this.msj = msj;
+			
+			if(Lenguaje.conocido(msj) == CONVERSION)
+				return responderConversacion(CONVERSION);
 			
 			if (Lenguaje.conocido(msj) == SALUDAR)
 				return responderConversacion(SALUDAR);
@@ -59,6 +63,10 @@ public class Asistente {
 
 	private String responderConversacion(int rsp) {
 		int i;
+		
+		if (rsp == CONVERSION) {
+			return "@" + this.user + Lenguaje.conversion(msj);
+		}
 		
 		if (rsp == SALUDAR) {
 			return Lenguaje.saludos() + ", @" + this.user;
