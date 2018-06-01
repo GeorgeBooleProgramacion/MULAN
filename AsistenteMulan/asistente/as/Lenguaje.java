@@ -180,6 +180,10 @@ public class Lenguaje {
 		return REG_AMD[2] + " " + Fecha.horaActual();
 	}
 	
+	public static String masChicoMasGrande() {
+		return REG_CG;
+	}
+	
 	
 	public static int getPosEncontrada() {
 		return posEncontrada;

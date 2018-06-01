@@ -69,5 +69,10 @@ public class RF10Tests {
 			);
 		
 	}
+	
+	@Test
+	public void asd() throws InterruptedException {
+		MasChicoMasGrande.maChiMaGra("Quiero jugar");
+	}
 
 }
