@@ -154,12 +154,10 @@ public class ServicioClima {
 	public void guardarTiempo() {
 		BufferedWriter writer = null;
         try {
-            //create a temporary file
             String timeLog = new SimpleDateFormat("MMddHHmm").format(Calendar.getInstance().getTime());
             File logFile = new File("timeLog");
 
-            // This will output the full path where the file will be written to...
-            System.out.println(logFile.getCanonicalPath());
+            //System.out.println(logFile.getCanonicalPath());
 
             writer = new BufferedWriter(new FileWriter(logFile));
             //writer = new BufferedWriter(new FileWriter(logFile, true));		//para agregar texto
@@ -169,7 +167,6 @@ public class ServicioClima {
             e.printStackTrace();
         } finally {
             try {
-                // Close the writer regardless of what happens...
                 writer.close();
             } catch (Exception e) {
             }
@@ -194,7 +191,7 @@ public class ServicioClima {
 	public String readFile(String filename) throws IOException
 	{
 	    String content = null;
-	    File file = new File(filename); // For example, foo.txt
+	    File file = new File(filename);
 	    FileReader reader = null;
 	    try {
 	        reader = new FileReader(file);
