@@ -48,10 +48,20 @@ public class Lenguaje {
 	private static final String[] REG_AMD = {"hoy es","La fecha de hoy es","son las","El año actual es",
 			 "Nos encontramos en el mes de"};//Respuestas sobre la fecha
 	
+	private static final String[] REG_CONVERSION = {"cuántos gramos son", "cuántos gramos hay en", "cuántos kilos son", "cuántos kilos hay en", "cuántas onzas son", "cuántas onzas hay en"};
+	
+	
 	public static int conocido(String msj) {
 		
 		if(enJuego)
 			return 20;
+		
+		for (int i = 0; i < REG_CONVERSION.length; i++) {
+			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_CONVERSION[i]).toUpperCase())) {
+				//posEncontrada = i;
+				return 6; // Conversion de unidades
+			}
+		}
 		
 		for (int i = 0; i < REG_SLD.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_SLD[i]).toUpperCase())) {
@@ -138,6 +148,23 @@ public class Lenguaje {
 
 	public static String respuestas_estado() {
 		return REG_RSE[(int) (Math.random() * (REG_RSE.length))];
+	}
+	
+	public static String conversion(String msj) {
+		
+		final String expresion = "(?:cuantas|cuantos|cuántos|cuántas) (\\w*) (?:son|hay en) (\\d+|.*) (\\w*)";
+		// 															  Grupo 1 				Grupo 2 Grupo 3
+		
+		final Pattern pattern = Pattern.compile(expresion); // compila la expresion regular y la guarda en pattern
+		final Matcher matcher = pattern.matcher(msj); // realiza las operaciones de coincidencia de caracteres
+														// intepretando la expresion regular cargada en pattern
+
+		if (matcher.find()) {
+			int numer = Integer.parseInt(matcher.group(2));
+			return Conversion.convertirUnidad(matcher.group(1), numer, matcher.group(3));
+		}
+		
+		return "";
 	}
 	
 	public static String respuesta_dia_dentro_de(String msj) {
