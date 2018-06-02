@@ -1,6 +1,8 @@
 package as;
 
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /*
 import java.util.Calendar;
 import java.util.Locale;
@@ -30,11 +32,11 @@ public class Lenguaje {
 	private static final String[] REG_RSE = { "Bien", "Muy bien", "Mal", "Pesimo", "Masomenos", "Perfecto", // Respuestas a las preguntas de estado																			
 											  "Excelente", "No podria estar mejor" };
 	
-	private static final String[] REG_PC = { "Hoy deberia llevar paraguas", "Llevo paraguas", "Es necesario el paraguas", "Paraguas" }; //Preguntas sobre el clima
+	private static final String[] REG_PC = { "llevar paraguas", "necesito paraguas", "usar paraguas" }; //Preguntas sobre el clima
 	
 	private static final String[] REG_RCT = { "Si deberias llevarlo", "Para no mojarte seria lo ideal" }; //Respuestas a preguntas del clima
 	
-	private static final String[] REG_RCF = { "No es necesario hoy", "No" }; //Respuestas a preguntas del clima
+	private static final String[] REG_RCF = { "No es necesario hoy", "Naaa" }; //Respuestas a preguntas del clima
 	
 	private static final String[] REG_RSB = { "Si", "No", "Por supuesto", "Claro que no" }; // Respuestas booleanas
 	
@@ -105,7 +107,7 @@ public class Lenguaje {
 		}
 		for (int i = 0; i < REG_PC.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_PC[i]).toUpperCase())) {
-				posEncontrada = i;
+				//posEncontrada = i;
 				return 9; //Clima
 			}
 		}
@@ -307,6 +309,29 @@ public class Lenguaje {
 		else
 			return "Ups... Ocurrio un error en el servidor";
 	}
+	
+	
+	public static Boolean preguntaClima(String msj, String ciudad, String pais) {
+		
+		//String msjf = sinTildes(msj);
+		
+		final String expresion = "(llevar paraguas|necesito paraguas|usar paraguas)(.*|\\w*|\\s*)(ubicacion|en)(.|\\s)(\\w*\\s*\\w*|\\w*),\\s*([a-zA-Z]{2})(.\\s*)(@mulan)";
+		
+		final Pattern pattern = Pattern.compile(expresion);
+		final Matcher matcher = pattern.matcher(msj);
+		
+		if(matcher.find()) {
+			ciudad = matcher.group(5);
+			pais = matcher.group(6);
+		}
+		else
+			return false;
+		
+		return true;	
+	}
+	
+	
+	
 
 }
 

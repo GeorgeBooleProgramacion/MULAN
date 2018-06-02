@@ -147,8 +147,12 @@ public class Asistente {
 		if (rsp == CLIMA) {
 			Clima clima = new Clima();
 			ServicioClima srv = new ServicioClima();
-			Boolean paraguas = srv.llevarParaguas("San Justo", "AR");
-			return Lenguaje.respuestas_clima(paraguas) + ", @" + this.user;
+			String ciudad = "";
+			String pais = "";
+			if(Lenguaje.preguntaClima(msj, ciudad, pais)) {
+				Boolean paraguas = srv.llevarParaguas(ciudad, pais);
+				return Lenguaje.respuestas_clima(paraguas) + ", @" + this.user;
+			}
 		}
 		return Lenguaje.no_entendidos() + ", @" + this.user;
 	}
