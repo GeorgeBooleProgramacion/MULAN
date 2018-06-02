@@ -18,7 +18,7 @@ public final static String USUARIO = "jmm96";
 	}
 	
 	@Test
-	public void saludo() {
+	public void chuckNorris() {
 		String rsp = null;
 		String[] mensajes = {
 				"Dime algun chuck norris fact, @mulan!",

@@ -29,6 +29,7 @@ public class Asistente {
 	private static final int NO_ENTENDER = -1;
 	private static final int CONVERSION = 6;
 	private static final int RESPUESTA_CHUCK = 15;
+	private static final int LEYES_ROBOTICA = 10;
 
 	public String charlar(String msj) {
 		if (msj.contains("@" + this.name)) {
@@ -61,10 +62,12 @@ public class Asistente {
 				return responderConversacion(MASCHICOMASGRANDE);
 			}
 			
-
 			if(Lenguaje.conocido(msj) == RESPUESTA_CHUCK) {
 				return responderConversacion(RESPUESTA_CHUCK);
 			}
+			
+			if (Lenguaje.conocido(msj) == LEYES_ROBOTICA)
+				return responderConversacion(LEYES_ROBOTICA);
 			
 			return responderConversacion(NO_ENTENDER);
 		}
@@ -105,6 +108,10 @@ public class Asistente {
 		
 		if (rsp == RESPUESTA_CHUCK) {
 			return Lenguaje.respuestas_chuk() + ", @" + this.user;
+		}
+		
+		if(rsp == LEYES_ROBOTICA) {
+			return "@" + this.user + ", " + Lenguaje.leyes_robotica();
 		}
 
 		

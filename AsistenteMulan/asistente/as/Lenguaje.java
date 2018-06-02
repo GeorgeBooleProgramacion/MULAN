@@ -55,7 +55,12 @@ public class Lenguaje {
 			"Cuando Chuck Norris hace flexiones, no está levantando su cuerpo, está empujando el planeta hacia abajo",
 			  "Chuck Norris ha contado hasta el número infinito… dos veces"};
 	
+	public static final String[] REG_LYR = {"1) Un robot no hará daño a un ser humano, ni permitirá con su inacción que sufra daño.",	//Leyes de la robotica
+			"2) Un robot debe cumplir las órdenes dadas por los seres humanos, a excepción de aquellas que entrasen en conflicto con la primera ley.",
+			"3) Un robot debe proteger su propia existencia en la medida en que esta protección no entre en conflicto con la primera o con la segunda ley."};
+	
 	static final Pattern EXP_CHK = Pattern.compile("(?i:chuck norris fact)");
+	static final Pattern EXP_LYR = Pattern.compile("(?i:leyes de la robotica)");
 	
 	public static int conocido(String msj) {
 		
@@ -64,6 +69,9 @@ public class Lenguaje {
 		
 		if(EXP_CHK.matcher(msj).find())
 			return 15;
+		
+		if(EXP_LYR.matcher(msj).find())
+			return 10;
 		
 		for (int i = 0; i < REG_CHK.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_CHK[i]).toUpperCase())) {
@@ -168,6 +176,10 @@ public class Lenguaje {
 	
 	public static String respuestas_chuk() {
 		 return REG_CHK[(int) (Math.random() * (REG_CHK.length))];
+	}
+	
+	public static String leyes_robotica() {
+		return "Las leyes de la robotica son:\n" + REG_LYR[0] + "\n" + REG_LYR[1] + "\n" + REG_LYR[2];
 	}
 	
 	public static String conversion(String msj) {
