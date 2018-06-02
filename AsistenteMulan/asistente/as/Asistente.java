@@ -28,6 +28,7 @@ public class Asistente {
 	private static final int MASCHICOMASGRANDE = 20;
 	private static final int NO_ENTENDER = -1;
 	private static final int CONVERSION = 6;
+	private static final int RESPUESTA_CHUCK = 15;
 
 	public String charlar(String msj) {
 		if (msj.contains("@" + this.name)) {
@@ -58,6 +59,11 @@ public class Asistente {
 			
 			if(Lenguaje.conocido(msj) == MASCHICOMASGRANDE) {
 				return responderConversacion(MASCHICOMASGRANDE);
+			}
+			
+
+			if(Lenguaje.conocido(msj) == RESPUESTA_CHUCK) {
+				return responderConversacion(RESPUESTA_CHUCK);
 			}
 			
 			return responderConversacion(NO_ENTENDER);
@@ -96,6 +102,11 @@ public class Asistente {
 		if(rsp == MASCHICOMASGRANDE) {
 			return "@" + this.user + " " + Lenguaje.masChicoMasGrande(this.msj);
 		}
+		
+		if (rsp == RESPUESTA_CHUCK) {
+			return Lenguaje.respuestas_chuk() + ", @" + this.user;
+		}
+
 		
 		if(rsp == RESPUESTA_FECHA) {
 			String ddd = String.valueOf(RSP_DIADENTRODE/*0*/), dh = String.valueOf(RSP_DIAHACE/*1*/), 

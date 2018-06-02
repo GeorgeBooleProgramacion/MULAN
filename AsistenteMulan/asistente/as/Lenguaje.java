@@ -50,11 +50,27 @@ public class Lenguaje {
 	
 	private static final String[] REG_CONVERSION = {"cuántos gramos son", "cuántos gramos hay en", "cuántos kilos son", "cuántos kilos hay en", "cuántas onzas son", "cuántas onzas hay en"};
 	
+	private static final String[] REG_CHK = { "Chuck Norris puede dividir por 0", "Chuck Norris es la razón por la que Wally se esconde",		//Respuestas chuk norris
+			"Chuck Norris puede quemar una hormiga con una lupa… de noche", "Chuck Norris no cree en Dios, Dios cree en Chuk Norris",
+			"Cuando Chuck Norris hace flexiones, no está levantando su cuerpo, está empujando el planeta hacia abajo",
+			  "Chuck Norris ha contado hasta el número infinito… dos veces"};
+	
+	static final Pattern EXP_CHK = Pattern.compile("(?i:chuck norris fact)");
 	
 	public static int conocido(String msj) {
 		
 		if(enJuego)
 			return 20;
+		
+		if(EXP_CHK.matcher(msj).find())
+			return 15;
+		
+		for (int i = 0; i < REG_CHK.length; i++) {
+			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_CHK[i]).toUpperCase())) {
+				posEncontrada = i;
+				return 15;
+			}
+		}
 		
 		for (int i = 0; i < REG_CONVERSION.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_CONVERSION[i]).toUpperCase())) {
@@ -148,6 +164,10 @@ public class Lenguaje {
 
 	public static String respuestas_estado() {
 		return REG_RSE[(int) (Math.random() * (REG_RSE.length))];
+	}
+	
+	public static String respuestas_chuk() {
+		 return REG_CHK[(int) (Math.random() * (REG_CHK.length))];
 	}
 	
 	public static String conversion(String msj) {
