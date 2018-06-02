@@ -15,8 +15,6 @@ public class Asistente {
 		this.user = u;
 	}
 	
-	
-	
 	private static final int DESPEDIR = 0;
 	private static final int SALUDAR = 1;
 	private static final int AGRADECER = 2;
@@ -33,12 +31,19 @@ public class Asistente {
 	private static final double RSP_AÑOACTUAL = 5.12;
 	private static final double RSP_DIASEMAN = 5.13;
 	private static final int CLIMA = 9;
+	private static final int MASCHICOMASGRANDE = 20;
 	private static final int NO_ENTENDER = -1;
+	private static final int CONVERSION = 6;
+	private static final int RESPUESTA_CHUCK = 15;
+	private static final int LEYES_ROBOTICA = 10;
 
 	public String charlar(String msj) {
 		if (msj.contains("@" + this.name)) {
 			
 			this.msj = msj;
+			
+			if(Lenguaje.conocido(msj) == CONVERSION)
+				return responderConversacion(CONVERSION);
 			
 			if (Lenguaje.conocido(msj) == SALUDAR)
 				return responderConversacion(SALUDAR);
@@ -62,12 +67,18 @@ public class Asistente {
 				return responderConversacion(RESPUESTA_FECHA);
 			}
 			
+			if(Lenguaje.conocido(msj) == MASCHICOMASGRANDE) {
+				return responderConversacion(MASCHICOMASGRANDE);
+			}
+			
+			if(Lenguaje.conocido(msj) == RESPUESTA_CHUCK) {
+				return responderConversacion(RESPUESTA_CHUCK);
+			}
+			
+			if (Lenguaje.conocido(msj) == LEYES_ROBOTICA)
+				return responderConversacion(LEYES_ROBOTICA);
+			
 			return responderConversacion(NO_ENTENDER);
-			/*
-			if (Lenguaje.conocido(msj) == RESPUESTA_FECHA)
-				return responderFecha(msj);
-			return responderConversacion(NO_ENTENDER);
-			 */
 		}
 		
 		return null;
@@ -75,6 +86,10 @@ public class Asistente {
 
 	private String responderConversacion(int rsp) {
 		int i;
+		
+		if (rsp == CONVERSION) {
+			return "@" + this.user + Lenguaje.conversion(msj);
+		}
 		
 		if (rsp == SALUDAR) {
 			return Lenguaje.saludos() + ", @" + this.user;
@@ -95,6 +110,19 @@ public class Asistente {
 		if (rsp == RESPUESTA_ESTADO) {
 			return Lenguaje.respuestas_estado() + ", @" + this.user;
 		}
+		
+		if(rsp == MASCHICOMASGRANDE) {
+			return "@" + this.user + " " + Lenguaje.masChicoMasGrande(this.msj);
+		}
+		
+		if (rsp == RESPUESTA_CHUCK) {
+			return Lenguaje.respuestas_chuk() + ", @" + this.user;
+		}
+		
+		if(rsp == LEYES_ROBOTICA) {
+			return "@" + this.user + ", " + Lenguaje.leyes_robotica();
+		}
+
 		
 		if(rsp == RESPUESTA_FECHA) {
 			String ddd = String.valueOf(RSP_DIADENTRODE/*0*/), dh = String.valueOf(RSP_DIAHACE/*1*/), 
@@ -157,9 +185,4 @@ public class Asistente {
 		return Lenguaje.no_entendidos() + ", @" + this.user;
 	}
 	
-	/*
-	private String responderFecha(String msj) {
-		return "@" + this.user + " " + Lenguaje.respuestas_fecha(msj);
-	}
- 	*/
 }

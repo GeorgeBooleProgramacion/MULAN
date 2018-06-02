@@ -1,14 +1,15 @@
 package as;
 
 import java.util.Date;
-/*
-import java.util.Calendar;
-import java.util.Locale;
-*/
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class Lenguaje {
 	
 	private static int posEncontrada;
+	private static boolean enJuego = false;
 
 	private static final String[] REG_SLD = { "Hola", "Buen día", "Buenas tardes", // Saludos
 											  "Buenas noches", "Buenas", "Holanda", "Hey" };
@@ -54,18 +55,50 @@ public class Lenguaje {
 	private static final String[] REG_FEC = {"Qué día es hoy", "qué día es", "Que fecha es hoy","Que hora es","En que fecha estamos",
 			 "En que mes estamos","En que año estamos", "Fecha", "qué día de la semana es hoy", "Hora"};//Preguntas sobre la fecha
 	*/
+	
+	private static final String[] REG_CG = {"Jugamos", "Mas chico mas grande", "Jugamos al mas chico mas grande"};
 
 	private static final String[] REG_AMD = {"hoy es","La fecha de hoy es","son las","El año actual es",
 			 "Nos encontramos en el mes de"};//Respuestas sobre la fecha
-
+	
+	private static final String[] REG_CONVERSION = {"cuántos gramos son", "cuántos gramos hay en", "cuántos kilos son", "cuántos kilos hay en", "cuántas onzas son", "cuántas onzas hay en"};
+	
+	private static final String[] REG_CHK = { "Chuck Norris puede dividir por 0", "Chuck Norris es la razón por la que Wally se esconde",		//Respuestas chuk norris
+			"Chuck Norris puede quemar una hormiga con una lupa… de noche", "Chuck Norris no cree en Dios, Dios cree en Chuk Norris",
+			"Cuando Chuck Norris hace flexiones, no está levantando su cuerpo, está empujando el planeta hacia abajo",
+			  "Chuck Norris ha contado hasta el número infinito… dos veces"};
+	
+	public static final String[] REG_LYR = {"1) Un robot no hará daño a un ser humano, ni permitirá con su inacción que sufra daño.",	//Leyes de la robotica
+			"2) Un robot debe cumplir las órdenes dadas por los seres humanos, a excepción de aquellas que entrasen en conflicto con la primera ley.",
+			"3) Un robot debe proteger su propia existencia en la medida en que esta protección no entre en conflicto con la primera o con la segunda ley."};
+	
+	static final Pattern EXP_CHK = Pattern.compile("(?i:chuck norris fact)");
+	static final Pattern EXP_LYR = Pattern.compile("(?i:leyes de la robotica)");
 	
 	public static int conocido(String msj) {
 		
-		/*for(int i = 0; i < REG_FEC.length; i++) {
-			if(sinTildes(msj).toUpperCase().contains(sinTildes(REG_FEC[i]).toUpperCase())) {
-					return 5; 
+		if(enJuego)
+			return 20;
+		
+		if(EXP_CHK.matcher(msj).find())
+			return 15;
+		
+		if(EXP_LYR.matcher(msj).find())
+			return 10;
+		
+		for (int i = 0; i < REG_CHK.length; i++) {
+			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_CHK[i]).toUpperCase())) {
+				posEncontrada = i;
+				return 15;
 			}
-		}*/
+		}
+		
+		for (int i = 0; i < REG_CONVERSION.length; i++) {
+			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_CONVERSION[i]).toUpperCase())) {
+				//posEncontrada = i;
+				return 6; // Conversion de unidades
+			}
+		}
 		
 		for (int i = 0; i < REG_SLD.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_SLD[i]).toUpperCase())) {
@@ -103,11 +136,20 @@ public class Lenguaje {
 				return 5;
 			}
 		}
+
 		for (int i = 0; i < REG_PC.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_PC[i]).toUpperCase())) {
 				return 9; //Clima
 			}
 		}
+
+		for (int i = 0; i < REG_CG.length; i++) {
+			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_CG[i]).toUpperCase())) {
+				posEncontrada = i;
+				return 20;
+			}
+		}
+
 		return -1; // No entender
 	}
 
@@ -150,7 +192,31 @@ public class Lenguaje {
 	public static String respuestas_estado() {
 		return REG_RSE[(int) (Math.random() * (REG_RSE.length))];
 	}
+
+	public static String respuestas_chuk() {
+		 return REG_CHK[(int) (Math.random() * (REG_CHK.length))];
+	}
 	
+	public static String leyes_robotica() {
+		return "Las leyes de la robotica son:\n" + REG_LYR[0] + "\n" + REG_LYR[1] + "\n" + REG_LYR[2];
+	}
+	
+	public static String conversion(String msj) {
+		
+		final String expresion = "(?:cuantas|cuantos|cuántos|cuántas) (\\w*) (?:son|hay en) (\\d+|.*) (\\w*)";
+		// 															  Grupo 1 				Grupo 2 Grupo 3
+		
+		final Pattern pattern = Pattern.compile(expresion); // compila la expresion regular y la guarda en pattern
+		final Matcher matcher = pattern.matcher(msj); // realiza las operaciones de coincidencia de caracteres
+														// intepretando la expresion regular cargada en pattern
+
+		if (matcher.find()) {
+			int numer = Integer.parseInt(matcher.group(2));
+			return Conversion.convertirUnidad(matcher.group(1), numer, matcher.group(3));
+		}
+		
+		return "";
+	}
 
 	public static String respuesta_dia_dentro_de(String msj) {
 		
@@ -205,6 +271,80 @@ public class Lenguaje {
 		return REG_AMD[2] + " " + Fecha.horaActual();
 	}
 	
+	public static String masChicoMasGrande(String msj) {
+		Integer min, max;
+		Pattern exp_stop = Pattern.compile("(?i:basta|stop|para|no juego mas)");
+		Matcher stopMtc = exp_stop.matcher(msj);
+		if(stopMtc.find()) {
+			enJuego = false;
+			MasChicoMasGrande.resetGame();
+			return "como gustes, dejaremos de jugar";
+		}
+		if(!enJuego) {
+			Pattern exp_minMax = Pattern.compile("(?i:numero|valor) (?i:del|de) (\\d+) (?i:hasta|al) (\\d+)");
+			Pattern exp_yoAdi = Pattern.compile("(?i:pensa|piensa)");
+			Matcher minMax = exp_minMax.matcher(sinTildes(msj));
+			Matcher adivinar = exp_yoAdi.matcher(sinTildes(msj));
+			
+			if(adivinar.find() && minMax.find()) {
+				min = Integer.parseInt(minMax.group(1));	//Capturo de donde
+				max = Integer.parseInt(minMax.group(2));	//hasta donde quiero adivinar
+				enJuego = true;
+				return MasChicoMasGrande.yoAdivino(min,max);
+			}
+			
+			if(!adivinar.find()) {
+				enJuego = true;
+				return MasChicoMasGrande.yoPienso();
+			}
+		}
+		else {
+			Pattern exp_num = Pattern.compile("(?i:es el) (\\d+)");
+			Pattern exp_mcmg = Pattern.compile("(?i:mas) (\\w+)|(?i:si)|(?i:listo)");
+			Pattern exp_ready = Pattern.compile("(?i:listo)");
+			Pattern exp_win = Pattern.compile("(?i:si)");
+			Matcher numMtc = exp_num.matcher(sinTildes(msj));
+			Matcher mcmgMtc = exp_mcmg.matcher(sinTildes(msj));
+			Matcher readyMtc = exp_ready.matcher(sinTildes(msj));
+			Matcher winMtc = exp_win.matcher(sinTildes(msj));
+			
+			if(numMtc.find()) {
+				Integer num = Integer.parseInt(numMtc.group(1));
+				String adiRes = MasChicoMasGrande.yoAdivino(num);
+				if(adiRes.contains("Adivinaste"))
+					enJuego = false;
+				return adiRes;
+			}
+			
+			if(mcmgMtc.find()) {
+				String pieRes = ""; 
+				
+				if(readyMtc.find()) {
+					pieRes = MasChicoMasGrande.yoPienso(0);
+					return pieRes;
+				}
+				
+				if(mcmgMtc.group(1) != null && mcmgMtc.group(1).equals("grande")) {
+					pieRes = MasChicoMasGrande.yoPienso(1);
+					return pieRes;
+				}
+				
+				if(mcmgMtc.group(1) != null && mcmgMtc.group(1).equals("chico")) {
+					pieRes = MasChicoMasGrande.yoPienso(2);
+					return pieRes;
+				}
+				
+				if(winMtc.find()) {
+					enJuego = false;
+					pieRes = MasChicoMasGrande.yoPienso(-1);
+					return pieRes;
+				}
+			}	
+		}
+		
+		return no_entendidos();
+	}
+	
 	
 	public static int getPosEncontrada() {
 		return posEncontrada;
@@ -254,48 +394,6 @@ public class Lenguaje {
 		return d;
 	}
 
-/*	public static String respuestas_fecha(String msj) {
-		Calendar c1 = Calendar.getInstance();
-		String dia = Integer.toString(c1.get(Calendar.DATE));
-		String mes = Integer.toString(c1.get(Calendar.MONTH)+1);
-		String anio = Integer.toString(c1.get(Calendar.YEAR));
-		String dayOfWeek = c1.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, new Locale("es","ES"));
-		String month = c1.getDisplayName(Calendar.MONTH, Calendar.LONG, new Locale("es","ES"));
-		Integer hour = (c1.get(Calendar.HOUR));
-		int horaNormal = c1.get(Calendar.HOUR_OF_DAY);
-		String min = Integer.toString(c1.get(Calendar.MINUTE));
-		String time = String.format("%s:%s",hour,min);
-		String timeMediodia = String.format("%d:%s",horaNormal,min);
-		if(msj.toUpperCase().contains("DIA DE LA SEMANA") || msj.toUpperCase().contains("HOY")) {
-			return REG_AMD[0] + " " + dayOfWeek ;		
-		}
-		if(msj.toUpperCase().contains("EN QUE MES ESTAMOS")) {
-			return REG_AMD[4] + " " + month;		
-		}
-		if(msj.toUpperCase().contains("QUÉ DÍA ES HOY") || msj.toUpperCase().contains("FECHA")) {
-			return REG_AMD[0] + " " + dia + " de" + " " + month + " de" + " " + anio ;		
-		}
-		if(msj.toUpperCase().contains("EN QUE AÑO ESTAMOS")) {
-			return REG_AMD[3] + " " + anio;		
-		}
-		else {
-				if(horaNormal == 12) 
-					return REG_AMD[2] + " " + timeMediodia + " PM";
-//				La hora de las doce del mediodía se expresa mejor como 12:00 m. (con punto),
-//				como indica el Diccionario panhispánico de dudas. 
-//				La razón es que el mediodía marca la frontera entre la mañana y la tarde, 
-//				y a la inversa en la medianoche, por lo que 12:00 p. m. (y 12:00 a. m.) 
-//				podría interpretarse de ambos modos.
-				
-				if(horaNormal > 12)
-					return REG_AMD[2] + " " + time + " PM";
-				else
-					return REG_AMD[2] + " " + time + " AM";
-				
-			 }	
-		
-*/
-
 	public static String respuestas_clima(Boolean paraguas) {
 		if(paraguas != null) {
 			if(paraguas)
@@ -306,6 +404,7 @@ public class Lenguaje {
 		else
 			return "Ups... Ocurrio un error en el servidor";
 	}
+
 
 }
 
