@@ -12,9 +12,9 @@ import srv.ServicioClima;
 
 //import java.util.concurrent.TimeUnit;
 
-class RF09Tests {
+public class RF09Tests {
 	
-public final static String USUARIO = "lna96"; 
+	public final static String USUARIO = "lna96"; 
 	
 	Asistente mulan;
 	
@@ -26,28 +26,23 @@ public final static String USUARIO = "lna96";
 	
 	@Test
 	public void paraguas() {
-		String rsp = "";
-		//String rsp = mulan.charlar("Necesito paraguas hoy en Ituzaingo, AR @mulan?");
-		if(mulan.charlar("Necesito paraguas hoy en Ituzaingo, AR @mulan?") != null)
-			System.out.println("Todo bien");
-		else
-			System.out.println("Todo mal :(");
+		String rsp = mulan.charlar("Necesito paraguas hoy en Ituzaingo, AR @mulan?");
 		//String rsp = mulan.charlar("Necesito paraguas? ubicacion San Justo, AR @mulan");
 		//String rsp = mulan.charlar("Tengo que usar paraguas hoy en Ituzaingo, AR @mulan?");
 		//String rsp = mulan.charlar("Debo llevar paraguas hoy en San Justo,AR? @mulan");
 		
-		//Assert.assertTrue(respuestas(rsp));
-
-		//System.out.println(rsp);
+		System.out.println(rsp);
+		
+		Assert.assertTrue(respuestas(rsp));
 	}
 	
 	public Boolean respuestas(String rsp) {
-		if(rsp.equals("Si deberias llevarlo") || 
-				rsp.equals("Si deberias llevarlo") || 
-				rsp.equals("Para no mojarte seria lo ideal") || 
-				rsp.equals("No es necesario hoy") || 
-				rsp.equals("Naaa") || 
-				rsp.equals("Ups... Ocurrio un error en el servidor")) {
+		if(rsp.equals("Si deberias llevarlo, @lna96") || 
+				rsp.equals("Si deberias llevarlo, @lna96") || 
+				rsp.equals("Para no mojarte seria lo ideal, @lna96") || 
+				rsp.equals("No es necesario hoy, @lna96") || 
+				rsp.equals("Naaa, @lna96") || 
+				rsp.equals("Error del servidor... Espera 10 minutos antes de consultar el clima de nuevo, @lna96")) {
 			
 			return true;
 		}

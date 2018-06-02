@@ -299,15 +299,15 @@ public class Lenguaje {
 		
 */
 
-	public static String respuestas_clima(Boolean paraguas) {
-		if(paraguas != null) {
-			if(paraguas)
+	public static String respuestas_clima(int paraguas) {
+		if(paraguas != -1) {
+			if(paraguas == 1)
 				return REG_RCT[(int) (Math.random() * (REG_RCT.length))];
 			else
 				return REG_RCF[(int) (Math.random() * (REG_RCF.length))];
 		}
 		else
-			return "Ups... Ocurrio un error en el servidor";
+			return "Error del servidor... Espera 10 minutos antes de consultar el clima de nuevo";
 	}
 	
 	
@@ -315,14 +315,15 @@ public class Lenguaje {
 		
 		//String msjf = sinTildes(msj);
 		
-		final String expresion = "(llevar paraguas|necesito paraguas|usar paraguas)(.*|\\w*|\\s*)(ubicacion|en)(.|\\s)(\\w*\\s*\\w*|\\w*),\\s*([a-zA-Z]{2})(.\\s*)(@mulan)";
+		//final String expresion = "(llevar paraguas|necesito paraguas|usar paraguas)(.*|\\w*|\\s*)(ubicacion|en)(.|\\s)(?:\\w*\\s*\\w*|\\w*),\\s*(?:[a-zA-Z]{2})(.\\s*)(@mulan)";
+		final String expresion = "(?:llevar paraguas|necesito paraguas|usar paraguas)(?:.*|\\w*|\\s*)(?:ubicacion|en)(?:.|\\s)(\\w*\\s*\\w*|\\w*),\\s*([a-zA-Z]{2})(?:.\\s*)(?:@mulan)";
 		
 		final Pattern pattern = Pattern.compile(expresion);
-		final Matcher matcher = pattern.matcher(msj);
+		final Matcher matcher = pattern.matcher(msj.toLowerCase());
 		
 		if(matcher.find()) {
-			ciudad = matcher.group(5);
-			pais = matcher.group(6);
+			ciudad = matcher.group(1);
+			pais = matcher.group(2);
 		}
 		else
 			return false;

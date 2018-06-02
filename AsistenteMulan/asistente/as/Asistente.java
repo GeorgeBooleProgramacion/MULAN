@@ -150,7 +150,7 @@ public class Asistente {
 			String ciudad = "";
 			String pais = "";
 			if(Lenguaje.preguntaClima(msj, ciudad, pais)) {
-				Boolean paraguas = srv.llevarParaguas(ciudad, pais);
+				int paraguas = srv.llevarParaguas(ciudad, pais);
 				return Lenguaje.respuestas_clima(paraguas) + ", @" + this.user;
 			}
 		}

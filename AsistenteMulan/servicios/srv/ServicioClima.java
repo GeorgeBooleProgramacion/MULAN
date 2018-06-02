@@ -21,28 +21,15 @@ import javax.xml.bind.DatatypeConverter;
 
 public class ServicioClima {
 
-	private Calendar tiempoActual;
-	private Calendar tiempoAnterior;
-	// SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-	// String horaActual = sdf.format(cal.getTime());
-	// private Date tiempoActual = cal.getTime();
-	// private final Calendar limiteTiempo =
-	// DatatypeConverter.parseDateTime("00-00-00T00:10:00-00:00");
-
 	private ConectorClima conector;
-
-	private Boolean primerLlamado;
 
 	public ServicioClima() {
 		conector = new ConectorClima();
-		tiempoAnterior = Calendar.getInstance();
-		primerLlamado = true;
 	}
 
 	public Clima obtenerClima(String ciudad, String pais) {
 
-		this.tiempoActual = Calendar.getInstance();
-		this.tiempoAnterior.add(Calendar.MINUTE, 10);
+		String tiempoActual = new SimpleDateFormat("MMddHHmm").format(Calendar.getInstance().getTime());
 
 		Clima clima = new Clima();
 
@@ -51,7 +38,7 @@ public class ServicioClima {
 		if (pais == null)
 			pais = "";
 
-		if (this.primerLlamado || tiempoActual.after(tiempoAnterior)) {
+		if (compararTiempos(tiempoActual)) {
 
 			String jsonClima = conector.getClimaActualCiudad(ciudad, pais);
 
@@ -60,22 +47,21 @@ public class ServicioClima {
 				clima.setError(false);
 			}
 
-			this.tiempoAnterior = Calendar.getInstance();
+			guardarTiempo();
 		}
-		this.primerLlamado = false;
+
 		return clima;
 	}
 
 	public Clima obtenerClimaTest(String ciudad, String pais) {
 
-		this.tiempoActual = Calendar.getInstance();
-		this.tiempoAnterior.add(Calendar.MINUTE, 1); // >>> SOLO PORQUE ES EL TEST ES 1 MIN
+		String tiempoActual = new SimpleDateFormat("MMddHHmm").format(Calendar.getInstance().getTime());
 
 		Clima clima = new Clima();
 
 		clima.setError(true);
 
-		if (this.primerLlamado || tiempoActual.after(tiempoAnterior)) {
+		if (compararTiempos(tiempoActual)) {
 
 			// String jsonClima = conector.getClimaActualCiudad(ciudad, pais);
 
@@ -87,12 +73,12 @@ public class ServicioClima {
 				clima.setError(false);
 			}
 
-			this.tiempoAnterior = Calendar.getInstance();
+			guardarTiempo();
 		}
-		this.primerLlamado = false;
+
 		return clima;
 	}
-	
+	/*
 	public Clima obtenerClimaTest2(String ciudad, String pais) {
 
 		String tiempoActual = new SimpleDateFormat("MMddHHmm").format(Calendar.getInstance().getTime());
@@ -115,39 +101,45 @@ public class ServicioClima {
 
 			guardarTiempo();
 		}
-		this.primerLlamado = false;
+
 		return clima;
 	}
-
-	public Boolean llevarParaguas(String ciudad, String pais) {
+	*/
+	public int llevarParaguas(String ciudad, String pais) {
 
 		Clima clima = new Clima();
 		
-		clima = this.obtenerClimaTest2(ciudad, pais);		// MODIFICAR A obtenerClima() PARA USAR LA API EN LUGAR DE LA SIMULACION
+		clima = this.obtenerClima(ciudad, pais);		// MODIFICAR A obtenerClima() PARA USAR LA API EN LUGAR DE LA SIMULACION
+														// PARA LA SIMULACION DEJAR obtenerClimaTest()
+		String condicion = "";
+		
+		try {
+			condicion = clima.getWeather().getMain();
+		} catch (Exception e) {
+			return -1;
+		}
 
-		String condicion = clima.getWeather().getMain();
-
-		if (!clima.getError()) {
+		if (clima.getError() == false) {
 			switch (condicion) {
 
 			case "Rain":
-				return true;
+				return 1;
 			case "Drizzle":
-				return true;
+				return 1;
 			case "Clouds": 
 				if ((clima.getWeather().getDescription().equals("overcast clouds")) || (clima.getClouds().getAll() > 70))
-					return true;
+					return 1;
 				else
-					return false;
+					return 0;
 			case "Thunderstorm":
-				return true;
+				return 1;
 			case "Snow":
-				return true;
+				return 1;
 			}
 		} else
-			return null;		//Cuando dio error el pedido a la API o no se espero el suficiente tiempo (10 min)
+			return -1;		//Cuando dio error el pedido a la API o no se espero el suficiente tiempo (10 min)
 
-		return false;		//Cuando el clima no tiene nada de lluvia
+		return 0;		//Cuando el clima no tiene nada de lluvia
 	}
 	
 	
@@ -183,7 +175,7 @@ public class ServicioClima {
 		}
 		int tac = Integer.parseInt(tiempoActual);
 		int tan = Integer.parseInt(tiempoAnterior);
-		if((tan + 1) >= tac)								// ESTO VA EN 10 EN REALIDA, CAMBIALO PAPU
+		if((tan + 10) >= tac)								// PARA LOS TEST SE PUEDE CAMBIAR A (tan + 1) ASI SOLO PASA 1 MIN
 			return false;	
 		return true;
 	}
