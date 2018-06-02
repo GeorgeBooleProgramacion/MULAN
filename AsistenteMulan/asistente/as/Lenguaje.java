@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import srv.ServicioClima;
 
 public class Lenguaje {
 	
@@ -31,11 +32,11 @@ public class Lenguaje {
 	private static final String[] REG_RSE = { "Bien", "Muy bien", "Mal", "Pesimo", "Masomenos", "Perfecto", // Respuestas a las preguntas de estado																			
 											  "Excelente", "No podria estar mejor" };
 	
-	private static final String[] REG_PC = { "Hoy deberia llevar paraguas", "Llevo paraguas", "Es necesario el paraguas", "Paraguas" }; //Preguntas sobre el clima
+	private static final String[] REG_PC = { "llevar paraguas", "necesito paraguas", "usar paraguas" }; //Preguntas sobre el clima
 	
 	private static final String[] REG_RCT = { "Si deberias llevarlo", "Para no mojarte seria lo ideal" }; //Respuestas a preguntas del clima
 	
-	private static final String[] REG_RCF = { "No es necesario hoy", "No" }; //Respuestas a preguntas del clima
+	private static final String[] REG_RCF = { "No es necesario hoy", "Naaa" }; //Respuestas a preguntas del clima
 	
 	private static final String[] REG_RSB = { "Si", "No", "Por supuesto", "Claro que no" }; // Respuestas booleanas
 	
@@ -139,6 +140,7 @@ public class Lenguaje {
 
 		for (int i = 0; i < REG_PC.length; i++) {
 			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_PC[i]).toUpperCase())) {
+				//posEncontrada = i;
 				return 9; //Clima
 			}
 		}
@@ -394,16 +396,82 @@ public class Lenguaje {
 		return d;
 	}
 
-	public static String respuestas_clima(Boolean paraguas) {
-		if(paraguas != null) {
-			if(paraguas)
+/*	public static String respuestas_fecha(String msj) {
+		Calendar c1 = Calendar.getInstance();
+		String dia = Integer.toString(c1.get(Calendar.DATE));
+		String mes = Integer.toString(c1.get(Calendar.MONTH)+1);
+		String anio = Integer.toString(c1.get(Calendar.YEAR));
+		String dayOfWeek = c1.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, new Locale("es","ES"));
+		String month = c1.getDisplayName(Calendar.MONTH, Calendar.LONG, new Locale("es","ES"));
+		Integer hour = (c1.get(Calendar.HOUR));
+		int horaNormal = c1.get(Calendar.HOUR_OF_DAY);
+		String min = Integer.toString(c1.get(Calendar.MINUTE));
+		String time = String.format("%s:%s",hour,min);
+		String timeMediodia = String.format("%d:%s",horaNormal,min);
+		if(msj.toUpperCase().contains("DIA DE LA SEMANA") || msj.toUpperCase().contains("HOY")) {
+			return REG_AMD[0] + " " + dayOfWeek ;		
+		}
+		if(msj.toUpperCase().contains("EN QUE MES ESTAMOS")) {
+			return REG_AMD[4] + " " + month;		
+		}
+		if(msj.toUpperCase().contains("QUÉ DÍA ES HOY") || msj.toUpperCase().contains("FECHA")) {
+			return REG_AMD[0] + " " + dia + " de" + " " + month + " de" + " " + anio ;		
+		}
+		if(msj.toUpperCase().contains("EN QUE AÑO ESTAMOS")) {
+			return REG_AMD[3] + " " + anio;		
+		}
+		else {
+				if(horaNormal == 12) 
+					return REG_AMD[2] + " " + timeMediodia + " PM";
+//				La hora de las doce del mediodía se expresa mejor como 12:00 m. (con punto),
+//				como indica el Diccionario panhispánico de dudas. 
+//				La razón es que el mediodía marca la frontera entre la mañana y la tarde, 
+//				y a la inversa en la medianoche, por lo que 12:00 p. m. (y 12:00 a. m.) 
+//				podría interpretarse de ambos modos.
+				
+				if(horaNormal > 12)
+					return REG_AMD[2] + " " + time + " PM";
+				else
+					return REG_AMD[2] + " " + time + " AM";
+				
+			 }	
+		
+*/
+
+	public static String respuestas_clima(int paraguas) {
+		if(paraguas != -1) {
+			if(paraguas == 1)
 				return REG_RCT[(int) (Math.random() * (REG_RCT.length))];
 			else
 				return REG_RCF[(int) (Math.random() * (REG_RCF.length))];
 		}
 		else
-			return "Ups... Ocurrio un error en el servidor";
+			return "Error del servidor... Espera 10 minutos antes de consultar el clima de nuevo";
 	}
+	
+	
+	public static Boolean preguntaClima(String msj, ServicioClima srv) {
+		
+		//String msjf = sinTildes(msj);
+		
+		//final String expresion = "(llevar paraguas|necesito paraguas|usar paraguas)(.*|\\w*|\\s*)(ubicacion|en)(.|\\s)(?:\\w*\\s*\\w*|\\w*),\\s*(?:[a-zA-Z]{2})(.\\s*)(@mulan)";
+		final String expresion = "(?:llevar paraguas|necesito paraguas|usar paraguas)(?:.*|\\w*|\\s*)(?:ubicacion|en)(?:.|\\s)(\\w*\\s*\\w*|\\w*),\\s*([a-zA-Z]{2})(?:.\\s*)(?:@mulan)";
+		
+		final Pattern pattern = Pattern.compile(expresion);
+		final Matcher matcher = pattern.matcher(msj.toLowerCase());
+		
+		if(matcher.find()) {
+			srv.setCity(matcher.group(1));
+			srv.setCountry(matcher.group(2));
+		}
+		else
+			return false;
+		
+		return true;	
+	}
+	
+	
+	
 
 
 }
