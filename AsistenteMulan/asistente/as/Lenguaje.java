@@ -62,7 +62,8 @@ public class Lenguaje {
 	private static final String[] REG_AMD = {"hoy es","La fecha de hoy es","son las","El año actual es",
 			 "Nos encontramos en el mes de"};//Respuestas sobre la fecha
 	
-	private static final String[] REG_CONVERSION = {"cuántos gramos son", "cuántos gramos hay en", "cuántos kilos son", "cuántos kilos hay en", "cuántas onzas son", "cuántas onzas hay en"};
+	private static final String[] REG_CONVERSION = {"cuantos gramos son", "cuántos gramos hay en", "cuántos kilos son", "cuántos kilos hay en", "cuántas onzas son", "cuántas onzas hay en", "cuantos metros son", 
+													"cuantos metros hay en", "cuantos segundos son", "cuantos segundos hay en"};
 	
 	private static final String[] REG_CHK = { "Chuck Norris puede dividir por 0", "Chuck Norris es la razón por la que Wally se esconde",		//Respuestas chuk norris
 			"Chuck Norris puede quemar una hormiga con una lupa… de noche", "Chuck Norris no cree en Dios, Dios cree en Chuk Norris",
@@ -213,8 +214,8 @@ public class Lenguaje {
 														// intepretando la expresion regular cargada en pattern
 
 		if (matcher.find()) {
-			int numer = Integer.parseInt(matcher.group(2));
-			return Conversion.convertirUnidad(matcher.group(1), numer, matcher.group(3));
+			double numero = Double.parseDouble(matcher.group(2));
+			return Conversion.convertirUnidad(matcher.group(1), numero, matcher.group(3));
 		}
 		
 		return "";
