@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import as.Asistente;
-import as.Conversion;
+
 
 
 public class RF11Tests {
