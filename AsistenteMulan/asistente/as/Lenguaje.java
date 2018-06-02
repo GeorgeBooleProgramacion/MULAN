@@ -43,8 +43,7 @@ public class Lenguaje {
 	private static final String[] REG_DIA = { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes",
 											  "Sábado", "Domingo"};
 	
-	private static final String[] REG_CG = {"Jugamos", "Mas chico mas grande", "Jugamos al mas chico mas grande", "Mas chico",
-											"Mas grande", "Es"};
+	private static final String[] REG_CG = {"Jugamos", "Mas chico mas grande", "Jugamos al mas chico mas grande"};
 
 	private static final String[] REG_AMD = {"hoy es","La fecha de hoy es","son las","El año actual es",
 			 "Nos encontramos en el mes de"};//Respuestas sobre la fecha
@@ -196,6 +195,13 @@ public class Lenguaje {
 	
 	public static String masChicoMasGrande(String msj) {
 		Integer min, max;
+		Pattern exp_stop = Pattern.compile("(?i:basta|stop|para|no juego mas)");
+		Matcher stopMtc = exp_stop.matcher(msj);
+		if(stopMtc.find()) {
+			enJuego = false;
+			MasChicoMasGrande.resetGame();
+			return "como gustes, dejaremos de jugar";
+		}
 		if(!enJuego) {
 			Pattern exp_minMax = Pattern.compile("(?i:numero|valor) (?i:del|de) (\\d+) (?i:hasta|al) (\\d+)");
 			Pattern exp_yoAdi = Pattern.compile("(?i:pensa|piensa)");

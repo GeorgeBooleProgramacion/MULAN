@@ -21,6 +21,13 @@ public class MasChicoMasGrande {
 		return valor_adivino;
 	}
 	
+	protected static void resetGame() {
+		minimo_pienso = MIN;
+		maximo_pienso = MAX;
+		valor_pienso = 0;
+		cont = 0;
+	}
+	
 	public static String yoAdivino(int min, int max) {
 		minimo_adivino = min;
 		maximo_adivino = max;
