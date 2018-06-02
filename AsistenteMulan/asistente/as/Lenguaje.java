@@ -46,7 +46,7 @@ public class Lenguaje {
 			 "Nos encontramos en el mes de"};//Respuestas sobre la fecha
 	
 	private static final String[] REG_CONVERSION = {"cuantos gramos son", "cuántos gramos hay en", "cuántos kilos son", "cuántos kilos hay en", "cuántas onzas son", "cuántas onzas hay en", "cuantos metros son", 
-													"cuantos metros hay en"};
+													"cuantos metros hay en", "cuantos segundos son", "cuantos segundos hay en"};
 	
 	
 	public static int conocido(String msj) {
