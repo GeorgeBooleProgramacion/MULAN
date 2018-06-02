@@ -147,10 +147,8 @@ public class Asistente {
 		if (rsp == CLIMA) {
 			Clima clima = new Clima();
 			ServicioClima srv = new ServicioClima();
-			String ciudad = "";
-			String pais = "";
-			if(Lenguaje.preguntaClima(msj, ciudad, pais)) {
-				int paraguas = srv.llevarParaguas(ciudad, pais);
+			if(Lenguaje.preguntaClima(msj, srv)) {
+				int paraguas = srv.llevarParaguas(srv.getCity(), srv.getCountry());
 				return Lenguaje.respuestas_clima(paraguas) + ", @" + this.user;
 			}
 		}

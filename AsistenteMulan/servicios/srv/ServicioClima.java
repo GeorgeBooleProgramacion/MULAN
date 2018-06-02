@@ -22,6 +22,27 @@ import javax.xml.bind.DatatypeConverter;
 public class ServicioClima {
 
 	private ConectorClima conector;
+	private String city;
+	private String country;
+	
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	
+	
+	
 
 	public ServicioClima() {
 		conector = new ConectorClima();
@@ -78,6 +99,7 @@ public class ServicioClima {
 
 		return clima;
 	}
+
 	/*
 	public Clima obtenerClimaTest2(String ciudad, String pais) {
 

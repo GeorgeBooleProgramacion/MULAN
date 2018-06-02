@@ -3,6 +3,8 @@ package as;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import srv.ServicioClima;
 /*
 import java.util.Calendar;
 import java.util.Locale;
@@ -311,7 +313,7 @@ public class Lenguaje {
 	}
 	
 	
-	public static Boolean preguntaClima(String msj, String ciudad, String pais) {
+	public static Boolean preguntaClima(String msj, ServicioClima srv) {
 		
 		//String msjf = sinTildes(msj);
 		
@@ -322,8 +324,8 @@ public class Lenguaje {
 		final Matcher matcher = pattern.matcher(msj.toLowerCase());
 		
 		if(matcher.find()) {
-			ciudad = matcher.group(1);
-			pais = matcher.group(2);
+			srv.setCity(matcher.group(1));
+			srv.setCountry(matcher.group(2));
 		}
 		else
 			return false;
