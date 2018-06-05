@@ -1,10 +1,13 @@
 package t;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Date;
 
 import org.junit.*;
 
 import as.Fecha;
+import bd.Usuario;
 
 public class GeneralTests {
 	
@@ -28,15 +31,15 @@ public class GeneralTests {
 		palabrita = "hólá gátó";
 	}
 	
-	@Test
+	/*@Test
 	public void hoy() {
 		Assert.assertEquals(DIA_HOY, Fecha.diaDeHoy());
-	}
+	}*/
 	
-	@Test
+	/*@Test
 	public void cantDias() {
 		Assert.assertEquals(5, Fecha.tiempoHasta(d));
-	}
+	}*/
 	
 	@Test
 	public void diaDentroDe() {
@@ -90,6 +93,16 @@ public class GeneralTests {
 		for(i++; i < str.length; i++) {
 			System.out.println(str[i]);
 		}
+	}
+	
+	@Test
+	public void probandoLeerUsuarios() throws FileNotFoundException {
+		Assert.assertTrue(Usuario.buscarUser("usr1", "1234"));
+	}
+	
+	@Test
+	public void probandoAppendearUsers() throws IOException {
+		Usuario.registrarUser("usr6", "4321");
 	}
 	
 }
