@@ -7,6 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import chat.Chat;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
@@ -34,7 +37,9 @@ public class PopupEntro extends JDialog {
 	 * Create the dialog.
 	 */
 	public PopupEntro() {
+		setResizable(false);
 		setBounds(100, 100, 310, 110);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -54,6 +59,7 @@ public class PopupEntro extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						Login.resetTextFields();
 						setVisible(false);
+						new Chat();
 					}
 				});
 				okButton.setActionCommand("OK");

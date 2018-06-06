@@ -1,3 +1,4 @@
+
 package log;
 
 import java.awt.BorderLayout;
@@ -8,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import bd.Usuario;
+import chat.Chat;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -30,6 +32,7 @@ public class Login extends JFrame {
 	private static JTextField textFieldUsuario;
 	private static JPasswordField passwordField;
 	static JButton btnRegistrate;
+	private JButton btnIniciar;
 
 	/**
 	 * Launch the application.
@@ -39,7 +42,7 @@ public class Login extends JFrame {
 			public void run() {
 				try {
 					Login frame = new Login();
-					//frame.setVisible(true);
+					// frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -54,23 +57,23 @@ public class Login extends JFrame {
 		setResizable(false);
 		setTitle("Login <ALPHA V.0.0.1>");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(0, 0, 450, 300);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		btnRegistrate = new JButton("Reg\u00EDstrate!");
 		btnRegistrate.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnRegistrate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if(!Usuario.puedoRegistrarUser(textFieldUsuario.getText()))
+					if (!Usuario.puedoRegistrarUser(textFieldUsuario.getText()))
 						new PopupUserYaReg();
-					else if(passwordField.getText().equals("")) {
+					else if (passwordField.getText().equals("")) {
 						new PopupIngPw();
-					}
-					else {
+					} else {
 						Usuario.registrarUser(textFieldUsuario.getText(), passwordField.getText());
 						new PopupRegConEx();
 					}
@@ -84,14 +87,14 @@ public class Login extends JFrame {
 		btnRegistrate.setEnabled(false);
 		btnRegistrate.setBounds(345, 11, 89, 23);
 		contentPane.add(btnRegistrate);
-		
+
 		textFieldUsuario = new JTextField();
 		textFieldUsuario.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				try {
-					if(textFieldUsuario.getText().equals("") || textFieldUsuario.getText().contains(" ") || 
-							!Usuario.puedoRegistrarUser(textFieldUsuario.getText()))
+					if (textFieldUsuario.getText().equals("") || textFieldUsuario.getText().contains(" ")
+							|| !Usuario.puedoRegistrarUser(textFieldUsuario.getText()))
 						btnRegistrate.setEnabled(false);
 					else
 						btnRegistrate.setEnabled(true);
@@ -99,26 +102,36 @@ public class Login extends JFrame {
 					e.printStackTrace();
 				}
 			}
+
+			@Override
+			public void keyPressed(KeyEvent k) {
+				if (k.getKeyCode() == KeyEvent.VK_ENTER)
+					btnIniciar.doClick();
+			}
 		});
 		textFieldUsuario.setBounds(107, 60, 226, 20);
 		contentPane.add(textFieldUsuario);
 		textFieldUsuario.setColumns(10);
-		
+
 		JLabel lblUsuario = new JLabel("Usuario");
 		lblUsuario.setBounds(195, 35, 46, 14);
 		contentPane.add(lblUsuario);
-		
+
 		JLabel lblContrasea = new JLabel("Contrase\u00F1a");
 		lblContrasea.setBounds(184, 107, 73, 14);
 		contentPane.add(lblContrasea);
-		
-		JButton btnIniciar = new JButton("Iniciar");
+
+		btnIniciar = new JButton("Iniciar");
 		btnIniciar.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					if(Usuario.buscarUser(textFieldUsuario.getText(), passwordField.getText()))
-						new PopupEntro();
+					if (Usuario.buscarUser(textFieldUsuario.getText(), passwordField.getText())) {
+						// new PopupEntro();
+						setVisible(false);
+						new Chat();
+					}
+
 					else
 						new PopupError();
 				} catch (FileNotFoundException e) {
@@ -128,14 +141,21 @@ public class Login extends JFrame {
 		});
 		btnIniciar.setBounds(172, 237, 89, 23);
 		contentPane.add(btnIniciar);
-		
+
 		passwordField = new JPasswordField();
+		passwordField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent k) {
+				if (k.getKeyCode() == KeyEvent.VK_ENTER)
+					btnIniciar.doClick();
+			}
+		});
 		passwordField.setBounds(107, 132, 226, 20);
 		contentPane.add(passwordField);
-		
+
 		setVisible(true);
 	}
-	
+
 	public static void resetTextFields() {
 		textFieldUsuario.setText("");
 		passwordField.setText("");

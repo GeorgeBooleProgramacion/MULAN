@@ -33,7 +33,9 @@ public class PopupError extends JDialog {
 	 * Create the dialog.
 	 */
 	public PopupError() {
+		setResizable(false);
 		setBounds(100, 100, 310, 110);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
