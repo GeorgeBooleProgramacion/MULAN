@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import bd.Usuario;
 import chat.Chat;
+import cli.Cliente;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -129,7 +130,12 @@ public class Login extends JFrame {
 					if (Usuario.buscarUser(textFieldUsuario.getText(), passwordField.getText())) {
 						// new PopupEntro();
 						setVisible(false);
-						new Chat();
+						try {
+							new Chat(new Cliente(10000, "localhost", textFieldUsuario.getText()));
+						} catch (Exception e) {
+							//System.err.println("Se cerro la conexión"); -> popup fin de conexion
+						}
+						
 					}
 
 					else

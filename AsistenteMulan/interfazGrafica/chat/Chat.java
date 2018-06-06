@@ -9,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 
 import com.sun.corba.se.impl.oa.poa.ActiveObjectMap.Key;
 
+import cli.Cliente;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -23,6 +25,7 @@ import javax.swing.JScrollPane;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.awt.ScrollPane;
 import java.awt.Font;
 
@@ -31,6 +34,7 @@ public class Chat extends JFrame {
 	private JPanel contentPane;
 	private JTextField textFieldIn;
 	private JButton btnEnviar;
+	private static Cliente c;
 
 	/**
 	 * Launch the application.
@@ -39,7 +43,7 @@ public class Chat extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Chat frame = new Chat();
+					Chat frame = new Chat(c);
 					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +55,7 @@ public class Chat extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Chat() {
+	public Chat(Cliente c) {
 		setResizable(false);
 		setTitle("CHAT <ALPHA V.0.0.1>");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -97,9 +101,13 @@ public class Chat extends JFrame {
 		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(!textFieldIn.getText().equals("")) {
-					textPaneOut.setText(textPaneOut.getText() + "\n" + textFieldIn.getText());
-					
-					textFieldIn.setText("");					
+					//textPaneOut.setText(textPaneOut.getText() + "\n" + textFieldIn.getText());
+					try {
+						c.escribe();
+						textFieldIn.setText("");
+					} catch (NullPointerException | IOException e) {
+						e.printStackTrace();
+					}					
 				}
 			}
 		});
