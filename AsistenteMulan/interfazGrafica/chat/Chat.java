@@ -7,8 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.sun.corba.se.impl.oa.poa.ActiveObjectMap.Key;
-
 import cli.Cliente;
 
 import javax.swing.JTextField;
@@ -32,9 +30,11 @@ import java.awt.Font;
 public class Chat extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textFieldIn;
+	private static JTextField textFieldIn;
 	private JButton btnEnviar;
-	private static Cliente c;
+	private static Cliente cli;
+	//private static String user = cli.getUser();
+	private static JTextPane textPaneOut;
 
 	/**
 	 * Launch the application.
@@ -43,7 +43,7 @@ public class Chat extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Chat frame = new Chat(c);
+					Chat frame = new Chat(cli);
 					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,6 +56,7 @@ public class Chat extends JFrame {
 	 * Create the frame.
 	 */
 	public Chat(Cliente c) {
+		cli = c;
 		setResizable(false);
 		setTitle("CHAT <ALPHA V.0.0.1>");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,12 +71,11 @@ public class Chat extends JFrame {
 		textPaneOut.setEditable(false);
 		textPaneOut.setBounds(10, 11, 387, 154);
 		contentPane.add(textPaneOut);
-
 		JScrollPane scrollPaneOut = new JScrollPane(textPaneOut);
 		scrollPaneOut.setBounds(0, 97, 204, -97);
 		contentPane.add(scrollPaneOut);*/
 		
-		JTextPane textPaneOut = new JTextPane();
+		textPaneOut = new JTextPane();
 		textPaneOut.setEditable(false);
 		JScrollPane scrollPaneOut = new JScrollPane(textPaneOut);
 		scrollPaneOut.setBounds(10,11,474,189);
@@ -107,6 +107,7 @@ public class Chat extends JFrame {
 						textFieldIn.setText("");
 					} catch (NullPointerException | IOException e) {
 						e.printStackTrace();
+						textPaneOut.setText(textPaneOut.getText() + "\n" + "<EL SERVIDOR NO SE ENCUENTRA ONLINE.>");
 					}					
 				}
 			}
@@ -116,5 +117,16 @@ public class Chat extends JFrame {
 		
 		setVisible(true);
 		
+	}
+	
+	public static void escribirEnChat(String msj) {
+		textPaneOut.setText(textPaneOut.getText() + "\n" + msj);
+	}
+	
+	public static String capturarMensaje() {
+		String msj;
+		if(!(msj = textFieldIn.getText()).equals(""))
+			textFieldIn.setText("");
+			return msj;
 	}
 }
