@@ -16,8 +16,12 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import javax.swing.JInternalFrame;
@@ -130,14 +134,13 @@ public class Login extends JFrame {
 					if (Usuario.buscarUser(textFieldUsuario.getText(), passwordField.getText())) {
 						// new PopupEntro();
 						try {
-							new Chat(new Cliente(22, "localhost", textFieldUsuario.getText()));
+							new Chat(new Cliente(27015, "192.168.0.12", textFieldUsuario.getText()));
 							setVisible(false);
 						} catch (Exception e) {
 							//System.err.println("Se cerro la conexión"); -> popup fin de conexion
 						}
 						
 					}
-
 					else
 						new PopupError();
 				} catch (FileNotFoundException e) {
@@ -167,4 +170,20 @@ public class Login extends JFrame {
 		passwordField.setText("");
 		btnRegistrate.setEnabled(false);
 	}
+	
+	public String quieroMiIp() throws Exception {
+		 try {
+			 	URL whatismyip = new URL("http://checkip.amazonaws.com");
+			 	BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));     
+			 	String ip = in.readLine();     
+			 	//System.out.println("My Public ip is = "+ip);
+			 	in.close();
+			 	return ip;
+			 	//System.out.println("----------------------------------------");
+	         } catch (MalformedURLException ex) {
+	        	throw new Exception("URL no compatible");
+	        } catch (IOException ex) {
+	        	throw new Exception("Falla en la entrada");
+	        }
+	    }
 }

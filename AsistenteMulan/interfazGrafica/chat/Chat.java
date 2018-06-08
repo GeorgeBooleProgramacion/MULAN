@@ -31,7 +31,7 @@ public class Chat extends JFrame {
 
 	private JPanel contentPane;
 	private static JTextField textFieldIn;
-	private JButton btnEnviar;
+	private static JButton btnEnviar;
 	private static Cliente cli;
 	//private static String user = cli.getUser();
 	private static JTextPane textPaneOut;
@@ -128,5 +128,11 @@ public class Chat extends JFrame {
 		if(!(msj = textFieldIn.getText()).equals(""))
 			textFieldIn.setText("");
 			return msj;
+	}
+	
+	public static void bloquearChat() {
+		textPaneOut.setEnabled(false);
+		textFieldIn.setEnabled(false);
+		btnEnviar.setEnabled(false);
 	}
 }

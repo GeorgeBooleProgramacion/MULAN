@@ -21,7 +21,8 @@ public class ClienteHilo extends Thread {
 				Chat.escribirEnChat(texto);//System.out.println(texto + "\n");
 			}
 		} catch(Exception e) {
-			System.err.println("Se ha desconectado cliente");
+			Chat.escribirEnChat("Te has desconectado del chat. Hasta luego!");
+			Chat.bloquearChat();
 		}
 	}
 

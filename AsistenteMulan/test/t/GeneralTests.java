@@ -1,8 +1,16 @@
 package t;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.URL;
 import java.util.Date;
+import java.util.Enumeration;
 
 import org.junit.*;
 
@@ -105,4 +113,19 @@ public class GeneralTests {
 		Usuario.registrarUser("usr6", "4321");
 	}
 	
+	@Test
+	public void quieroMiIp() throws Exception {
+		 try {
+			 	URL whatismyip = new URL("http://checkip.amazonaws.com");
+			 	BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));     
+			 	String ip = in.readLine();     
+			 	System.out.println("My Public ip is = "+ip);
+			 	in.close();
+			 	System.out.println("----------------------------------------");
+	         } catch (MalformedURLException ex) {
+	        	throw new Exception("URL no compatible");
+	        } catch (IOException ex) {
+	        	throw new Exception("Falla en la entrada");
+	        }
+	    }
 }
