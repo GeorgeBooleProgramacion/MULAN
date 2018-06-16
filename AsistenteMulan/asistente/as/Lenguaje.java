@@ -206,7 +206,7 @@ public class Lenguaje {
 	
 	public static String conversion(String msj) {
 		
-		final String expresion = "(?:cuantas|cuantos|cuántos|cuántas) (\\w*) (?:son|hay en) (\\d+|.*) (\\w*)";
+		final String expresion = "(?:cuantas|cuantos|cuántos|cuántas) (\\w*) (?:son|hay en) (\\d+\\.?\\d*) (\\w*)";
 		// 															  Grupo 1 				Grupo 2 Grupo 3
 		
 		final Pattern pattern = Pattern.compile(expresion); // compila la expresion regular y la guarda en pattern
