@@ -6,10 +6,11 @@ import java.net.Socket;
 
 import as.Youtube;
 import chat.Chat;
+import chat.Image9gag;
 
 public class ClienteHilo extends Thread {
 	
-	private Socket cliente;
+private Socket cliente;
 	
 	public ClienteHilo(Socket cliente) {
 		this.cliente = cliente;
@@ -21,7 +22,11 @@ public class ClienteHilo extends Thread {
 			while(true) {
 				texto = new DataInputStream(cliente.getInputStream()).readUTF();
 				if(esComando(texto) >= 0)
+<<<<<<< HEAD
 					comandos(esComando(texto), texto);
+=======
+					comandos(esComando(texto));
+>>>>>>> 9gag
 				Chat.escribirEnChat(texto);
 			}
 		} catch(Exception e) {
@@ -45,10 +50,14 @@ public class ClienteHilo extends Thread {
 			return 6;
 		/*if(t.toLowerCase().contains("/youtube"))
 			return 5;*/
+		if(t.toLowerCase().contains("/9gag"))
+			return 16;
 		return -1;
 	}
 	
-	private void comandos(int c, String t) throws IOException, InterruptedException {
+	
+	private void comandos(int c) throws IOException, InterruptedException {
+
 		if(c == 0)
 			Chat.ponerMeme(0);
 		if(c == 1)
@@ -63,6 +72,11 @@ public class ClienteHilo extends Thread {
 			Chat.buscarGif(t);
 		/*if(c == 5)
 			Youtube.acceder(t);	*/	
+		if(c == 16) {
+			Chat.ponerImg9gag();
+			//Image9gag imgGag = new Image9gag("imagenes\\img01.jpg","9GAG Random Post!");
+		}
+
 	}
 
 }

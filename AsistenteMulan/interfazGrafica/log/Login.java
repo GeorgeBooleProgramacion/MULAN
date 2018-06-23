@@ -134,7 +134,9 @@ public class Login extends JFrame {
 					if (Usuario.buscarUser(textFieldUsuario.getText(), passwordField.getText())) {
 						// new PopupEntro();
 						try {
+
 							new Chat(new Cliente(10000, "localhost", textFieldUsuario.getText()));//27015
+
 							setVisible(false);
 						} catch (Exception e) {
 							//System.err.println("Se cerro la conexión"); -> popup fin de conexion
