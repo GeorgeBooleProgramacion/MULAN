@@ -22,11 +22,7 @@ private Socket cliente;
 			while(true) {
 				texto = new DataInputStream(cliente.getInputStream()).readUTF();
 				if(esComando(texto) >= 0)
-<<<<<<< HEAD
 					comandos(esComando(texto), texto);
-=======
-					comandos(esComando(texto));
->>>>>>> 9gag
 				Chat.escribirEnChat(texto);
 			}
 		} catch(Exception e) {
@@ -56,7 +52,7 @@ private Socket cliente;
 	}
 	
 	
-	private void comandos(int c) throws IOException, InterruptedException {
+	private void comandos(int c, String t) throws IOException, InterruptedException {
 
 		if(c == 0)
 			Chat.ponerMeme(0);

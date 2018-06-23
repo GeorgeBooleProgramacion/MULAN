@@ -182,7 +182,8 @@ public class Chat extends JFrame {
 			String q = matcher.group(1);
 			new Gif(q);
 		}
-		
+	}
+	
 	public static void ponerImg9gag() throws IOException, InterruptedException {
 		ImageIcon im = null;
 		String path = "imagenes\\img01.jpg";
