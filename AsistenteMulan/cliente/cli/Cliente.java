@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.Scanner;
 
+import as.Youtube;
 import chat.Chat;
 
 public class Cliente {
@@ -27,7 +28,9 @@ public class Cliente {
 	public void escribe() throws IOException {
 		String msj = Chat.capturarMensaje();
 		DataOutputStream dos = new DataOutputStream(cliente.getOutputStream());
-		if(!msj.toLowerCase().equals("/salir")) {
+		if(!msj.toLowerCase().equals("/salir")) {	//ACA ADENTRO VA LO DE YOUTUBE PORQUE SINO ME LO ABRE PARA TODOS LOS DEL CHAT
+			if(msj.toLowerCase().contains("/youtube"))
+				Youtube.acceder(msj);
 			dos.writeUTF(this.user + ": " + msj);
 			msj = Chat.capturarMensaje();
 			return;
