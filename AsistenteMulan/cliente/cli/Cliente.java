@@ -24,34 +24,16 @@ public class Cliente {
 		}
 	}
 	
-	//InputStreamReader leer = new InputStreamReader(System.in);
-	//BufferedReader buffer = new BufferedReader(leer);
-	
 	public void escribe() throws IOException {
-		//InputStreamReader leer = new InputStreamReader(System.in);
-		//BufferedReader buffer = new BufferedReader(leer);
-		String msj = Chat.capturarMensaje();//buffer.readLine();
+		String msj = Chat.capturarMensaje();
 		DataOutputStream dos = new DataOutputStream(cliente.getOutputStream());
 		if(!msj.toLowerCase().equals("/salir")) {
 			dos.writeUTF(this.user + ": " + msj);
-			msj = Chat.capturarMensaje();//buffer.readLine();
+			msj = Chat.capturarMensaje();
 			return;
 		}
 		cliente.close();
-//		System.out.print(">: ");
-//		msj = sc.nextLine();
-		//sc.close();
-		//return true;
 	}
-	
-	/*public static void main(String[] args) {
-		try {
-			new Cliente(22, "192.168.0.12", "jmm96").escribe();
-			//System.out.println("Anda a la cancha bobo");
-		} catch(Exception e) {
-			System.err.println("Se cerro la conexión\n");
-		}
-	}*/
 	
 	public String getUser() {
 		return this.user;

@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneLayout;
 import javax.swing.DropMode;
+import javax.swing.ImageIcon;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
@@ -26,6 +27,9 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.awt.ScrollPane;
 import java.awt.Font;
+import java.awt.Image;
+import javax.swing.JInternalFrame;
+
 
 public class Chat extends JFrame {
 
@@ -76,6 +80,8 @@ public class Chat extends JFrame {
 		contentPane.add(scrollPaneOut);*/
 		
 		textPaneOut = new JTextPane();
+		textPaneOut.setText("Bienvenido al Chat!");
+		textPaneOut.setFont(new Font("Calibri", Font.PLAIN, 12));
 		textPaneOut.setEditable(false);
 		JScrollPane scrollPaneOut = new JScrollPane(textPaneOut);
 		scrollPaneOut.setBounds(10,11,474,189);
@@ -128,6 +134,34 @@ public class Chat extends JFrame {
 		if(!(msj = textFieldIn.getText()).equals(""))
 			textFieldIn.setText("");
 			return msj;
+	}
+	
+	public static void ponerMeme(int m) throws IOException, InterruptedException {
+		ImageIcon im = null;
+		String path = "memes\\";
+		String t = null;
+		if(m == 0) {
+			path += "trollFace.jpg";
+			t = "Trolololololo lololo loloo";
+		}
+		if(m == 1) {
+			path += "takeMyMoney.jpg";
+			t = "Take my money!!!";
+		}
+		if(m == 2) {
+			path += "itsATrap.jpg";
+			t = "IT'S A TRAAAAP!!";
+		}
+		if(m == 3) {
+			path += "foreverAlone.jpg";
+			t = "Forever alone :'(";
+		}
+		if(m == 4) {
+			path += "challengeAccepted.jpg";
+			t = "Challange accepted =.=";
+		}
+		Meme me = new Meme(path,t);
+
 	}
 	
 	public static void bloquearChat() {
