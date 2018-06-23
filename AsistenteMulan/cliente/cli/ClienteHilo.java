@@ -3,6 +3,7 @@ package cli;
 import java.io.DataInputStream;
 import java.net.Socket;
 
+import as.Youtube;
 import chat.Chat;
 
 public class ClienteHilo extends Thread {
@@ -18,6 +19,8 @@ public class ClienteHilo extends Thread {
 		try {
 			while(true) {
 				texto = new DataInputStream(cliente.getInputStream()).readUTF();
+				if(texto.toUpperCase().contains("BUSCAR EN YOUTUBE"))
+					Youtube.acceder();
 				Chat.escribirEnChat(texto);//System.out.println(texto + "\n");
 			}
 		} catch(Exception e) {
