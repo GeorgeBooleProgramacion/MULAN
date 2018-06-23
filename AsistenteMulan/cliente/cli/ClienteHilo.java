@@ -19,8 +19,8 @@ public class ClienteHilo extends Thread {
 		try {
 			while(true) {
 				texto = new DataInputStream(cliente.getInputStream()).readUTF();
-				if(texto.toUpperCase().contains("BUSCAR EN YOUTUBE"))
-					Youtube.acceder();
+				if(texto.toLowerCase().contains("/youtube"))
+					Youtube.acceder(texto);
 				Chat.escribirEnChat(texto);//System.out.println(texto + "\n");
 			}
 		} catch(Exception e) {
