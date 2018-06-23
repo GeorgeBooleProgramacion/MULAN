@@ -26,6 +26,8 @@ import javax.swing.JScrollPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.awt.ScrollPane;
 import java.awt.Font;
 import java.awt.Image;
@@ -163,6 +165,16 @@ public class Chat extends JFrame {
 		}
 		Meme me = new Meme(path,t);
 
+	}
+	
+	public static void buscarGif(String t) throws IOException, InterruptedException {
+		final String expresion = "(?i:gif) (\\w.*)";
+		final Pattern pattern = Pattern.compile(expresion);
+		final Matcher matcher = pattern.matcher(t);
+		if(matcher.find()) {
+			String q = matcher.group(1);
+			new Gif(q);
+		}
 	}
 	
 	public static void bloquearChat() {

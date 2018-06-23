@@ -1,5 +1,8 @@
 package as;
 
+//API YOUTUBE: https://www.googleapis.com/youtube/v3/videos?id=7lCDEYXw3mM&key=YOUR_API_KEY&part=snippet,contentDetails,statistics,status
+//MI API KEY: AIzaSyDvBvpS2utvQqdqgnbjYrFaiyGW33mQRwI
+
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -41,6 +41,8 @@ public class ClienteHilo extends Thread {
 			return 3;
 		if(t.toLowerCase().contains("/challangeaccepted"))
 			return 4;
+		if(t.toLowerCase().contains("/gif"))
+			return 6;
 		/*if(t.toLowerCase().contains("/youtube"))
 			return 5;*/
 		return -1;
@@ -57,6 +59,8 @@ public class ClienteHilo extends Thread {
 			Chat.ponerMeme(3);
 		if(c == 4)
 			Chat.ponerMeme(4);
+		if(c == 6)
+			Chat.buscarGif(t);
 		/*if(c == 5)
 			Youtube.acceder(t);	*/	
 	}
