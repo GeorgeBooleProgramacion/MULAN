@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import cli.Cliente;
+import srv.ImageExtractor;
+import srv.Service9gag;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -18,6 +20,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneLayout;
 import javax.swing.DropMode;
+import javax.swing.ImageIcon;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
@@ -110,6 +113,11 @@ public class Chat extends JFrame {
 						textPaneOut.setText(textPaneOut.getText() + "\n" + "<EL SERVIDOR NO SE ENCUENTRA ONLINE.>");
 					}					
 				}
+				/*else {
+					if(textFieldIn.getText().equals("/9gag") || textFieldIn.getText().equals("/9Gag") || textFieldIn.getText().equals("/9GAG")) {
+						
+					}
+				}*/
 			}
 		});
 		btnEnviar.setBounds(421, 267, 63, 23);
@@ -130,9 +138,27 @@ public class Chat extends JFrame {
 			return msj;
 	}
 	
+	public static void ponerImg9gag() throws IOException, InterruptedException {
+		ImageIcon im = null;
+		String path = "imagenes\\img01.jpg";
+		String url = null;
+		String t = "9GAG Random Post!";
+		
+		//ImageExtractor ie = new ImageExtractor();
+		//url = ImageExtractor.extractImageUrl("9gag.com/random");
+		//System.out.println(url);
+		//ImageExtractor.saveImage(url, path);
+		//Service9gag srvGag = new Service9gag(path);
+		
+		Image9gag imgGag = new Image9gag(path,t);
+	}
+	
 	public static void bloquearChat() {
 		textPaneOut.setEnabled(false);
 		textFieldIn.setEnabled(false);
 		btnEnviar.setEnabled(false);
 	}
 }
+
+
+
