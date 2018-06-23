@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import as.Youtube;
 import chat.Chat;
 
 public class ClienteHilo extends Thread {
@@ -20,7 +21,7 @@ public class ClienteHilo extends Thread {
 			while(true) {
 				texto = new DataInputStream(cliente.getInputStream()).readUTF();
 				if(esComando(texto) >= 0)
-					comandos(esComando(texto));
+					comandos(esComando(texto), texto);
 				Chat.escribirEnChat(texto);
 			}
 		} catch(Exception e) {
@@ -40,10 +41,12 @@ public class ClienteHilo extends Thread {
 			return 3;
 		if(t.toLowerCase().contains("/challangeaccepted"))
 			return 4;
+		if(t.toLowerCase().contains("/youtube"))
+			return 5;
 		return -1;
 	}
 	
-	private void comandos(int c) throws IOException, InterruptedException {
+	private void comandos(int c, String t) throws IOException, InterruptedException {
 		if(c == 0)
 			Chat.ponerMeme(0);
 		if(c == 1)
@@ -54,6 +57,8 @@ public class ClienteHilo extends Thread {
 			Chat.ponerMeme(3);
 		if(c == 4)
 			Chat.ponerMeme(4);
+		if(c == 5)
+			Youtube.acceder(t);
 	}
 
 }

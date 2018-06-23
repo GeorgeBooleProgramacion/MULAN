@@ -11,6 +11,8 @@ import java.net.SocketException;
 import java.net.URL;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.*;
 
@@ -89,6 +91,7 @@ public class GeneralTests {
 		palabrita.replace('ó', 'o');
 		palabrita.replace('ú', 'u');
 		System.out.println(palabrita);
+		System.out.println("----------------------------------------");
 	}
 	
 	@Test
@@ -128,4 +131,26 @@ public class GeneralTests {
 	        	throw new Exception("Falla en la entrada");
 	        }
 	    }
+	
+	@Test
+	public void regex() throws IOException {
+		System.out.println("CADENITA DE BUSQUEDA:");
+		String link = "https://www.youtube.com/results?search_query=";
+		String msj = "usr1: /youtube anda a la cancha bobo";
+		final String expresion = "(?i:youtube) (\\w.*)";
+		final Pattern pattern = Pattern.compile(expresion);
+		final Matcher matcher = pattern.matcher(msj);
+		
+		if(matcher.find()) {
+			String la = matcher.group(1).replace(" ", "+");
+			System.out.println(la);
+			System.out.println("LINK:");
+			link+=la;
+			System.out.println(link);
+			Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + link);
+		}
+		else
+			System.out.println("No anduvo");
+		System.out.println("----------------------------------------");
+	}
 }
