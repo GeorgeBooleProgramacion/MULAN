@@ -72,8 +72,6 @@ public class Image9gag extends JDialog{
 		setBounds(100, 100, ii.getIconWidth()+5, ii.getIconHeight()+5);
 		
 		this.setVisible(true);
-		Thread.sleep(20000);			//ESTABA EN 3000
-		this.dispose();
 	}
 
 }
