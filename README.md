@@ -26,7 +26,7 @@ Puntos realizados:
 
 22. Como usuario quiero mencionar un meme y que el asistente lo ilustre, para divertirme en la oficina. 10pts. Utilizar al menos 15 memes. It's a trap, Take my money, etc.
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Puntos a terminar (solo el 21 es obligatorio, los demas hay que elegir cuales):
 
