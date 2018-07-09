@@ -34,6 +34,11 @@ import java.awt.ScrollPane;
 import java.awt.Font;
 import java.awt.Image;
 import javax.swing.JInternalFrame;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 
 public class Chat extends JFrame {
@@ -44,6 +49,8 @@ public class Chat extends JFrame {
 	private static Cliente cli;
 	//private static String user = cli.getUser();
 	private static JTextPane textPaneOut;
+	private JComboBox salaComboBox;
+	private JLabel lblSalaN;
 
 	/**
 	 * Launch the application.
@@ -130,6 +137,28 @@ public class Chat extends JFrame {
 		});
 		btnEnviar.setBounds(421, 267, 63, 23);
 		contentPane.add(btnEnviar);
+		
+		salaComboBox = new JComboBox();
+		salaComboBox.setModel(new DefaultComboBoxModel(new String[] {"General", "Sala 1", "Sala 2", "Sal...i de aca!!!"}));
+		salaComboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				String sala = salaComboBox.getSelectedItem().toString();
+				textPaneOut.setText(textPaneOut.getText() + "\nEsta en " + sala);
+				
+				int numSala = salaComboBox.getSelectedIndex();
+			}
+		});
+		salaComboBox.setBounds(40, 267, 104, 20);
+		contentPane.add(salaComboBox);
+		
+		lblSalaN = new JLabel("Sala:");
+		lblSalaN.setBounds(10, 270, 46, 14);
+		contentPane.add(lblSalaN);
+		
+		JButton btnCrearSala = new JButton("Crear Sala");
+		btnCrearSala.setEnabled(false);
+		btnCrearSala.setBounds(154, 266, 89, 23);
+		contentPane.add(btnCrearSala);
 		
 		setVisible(true);
 		

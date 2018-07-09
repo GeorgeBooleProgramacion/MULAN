@@ -30,6 +30,9 @@ import javax.swing.JLayeredPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Font;
+import javax.swing.JList;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class Login extends JFrame {
 
@@ -125,7 +128,12 @@ public class Login extends JFrame {
 		JLabel lblContrasea = new JLabel("Contrase\u00F1a");
 		lblContrasea.setBounds(184, 107, 73, 14);
 		contentPane.add(lblContrasea);
-
+		/*
+		JComboBox<?> salaComboBox = new JComboBox();
+		salaComboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3"}));
+		salaComboBox.setBounds(238, 181, 36, 20);
+		contentPane.add(salaComboBox);
+		*/
 		btnIniciar = new JButton("Iniciar");
 		btnIniciar.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
