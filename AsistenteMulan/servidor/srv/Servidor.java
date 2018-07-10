@@ -4,14 +4,19 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Servidor {
+public class Servidor extends Thread{
 	
 	private ArrayList<Socket> clientes;
+	private int puerto;
 	
 	public Servidor(int puerto) {
-		int i = 0;
 		this.clientes = new ArrayList<Socket>();
-		
+		this.puerto = puerto;
+		this.start();
+	}
+	
+	public void run() {
+		int i = 0;
 		try {
 			ServerSocket servidor = new ServerSocket(puerto);
 			System.out.println("Skynet online...");
