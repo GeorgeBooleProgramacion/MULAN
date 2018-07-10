@@ -29,22 +29,24 @@ public class ServidorHilo extends Thread {
 			while (!msj.toLowerCase().equals("/salir")) {
 				System.out.println(msj);
 
-				//Pattern pattern = Pattern.compile("(.*|\\\\w*|\\\\s*)(@mulan)");
 				Pattern pattern = Pattern.compile("(\\w*)(:?:)(.*|\\w*|\\s*)(@mulan)");
 				Matcher matcher = pattern.matcher(msj.toLowerCase());
-				String msj2 = "";
+				String msj2 = " ";
 				String usuario = "";
 				if(matcher.find()) {		
 					usuario = matcher.group(1);
 					mulan = new Asistente("mulan", usuario);
 					msj2 = mulan.charlar(msj);
 					System.out.println(msj2);
-					new DataOutputStream(cliente.getOutputStream()).writeUTF(msj2);
+					//new DataOutputStream(cliente.getOutputStream()).writeUTF(msj2);
+					//new DataOutputStream(cliente.getOutputStream()).writeUTF(msj);
 				}
 				//if(msj.equals("--1--"))					//Sacar primera parte del mensaje con regex (para saber a donde mandarlo) y solo pasar la segunda como mensaje
 					
-				for (Socket i : listaCli)
+				for (Socket i : listaCli) {
 					new DataOutputStream(i.getOutputStream()).writeUTF(msj);
+					new DataOutputStream(i.getOutputStream()).writeUTF(msj2);
+				}
 
 				msj = new DataInputStream(cliente.getInputStream()).readUTF();
 			}
