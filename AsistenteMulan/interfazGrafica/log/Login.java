@@ -41,6 +41,7 @@ public class Login extends JFrame {
 	private static JPasswordField passwordField;
 	static JButton btnRegistrate;
 	private JButton btnIniciar;
+	private static JTextField textFieldHost;
 
 	/**
 	 * Launch the application.
@@ -126,7 +127,7 @@ public class Login extends JFrame {
 		contentPane.add(lblUsuario);
 
 		JLabel lblContrasea = new JLabel("Contrase\u00F1a");
-		lblContrasea.setBounds(184, 107, 73, 14);
+		lblContrasea.setBounds(184, 91, 73, 14);
 		contentPane.add(lblContrasea);
 		/*
 		JComboBox<?> salaComboBox = new JComboBox();
@@ -142,8 +143,10 @@ public class Login extends JFrame {
 					if (Usuario.buscarUser(textFieldUsuario.getText(), passwordField.getText())) {
 						// new PopupEntro();
 						try {
-
-							new Chat(new Cliente(10000, "localhost", textFieldUsuario.getText()));//27015
+							if(textFieldHost.getText().equals("") || textFieldHost.getText().contains(" "))
+								new Chat(new Cliente(10000, "localhost", textFieldUsuario.getText()));
+							else
+								new Chat(new Cliente(10000, textFieldHost.getText(), textFieldUsuario.getText()));
 
 							setVisible(false);
 						} catch (Exception e) {
@@ -169,8 +172,17 @@ public class Login extends JFrame {
 					btnIniciar.doClick();
 			}
 		});
-		passwordField.setBounds(107, 132, 226, 20);
+		passwordField.setBounds(107, 116, 226, 20);
 		contentPane.add(passwordField);
+		
+		JLabel lblHost = new JLabel("Host");
+		lblHost.setBounds(201, 147, 22, 14);
+		contentPane.add(lblHost);
+		
+		textFieldHost = new JTextField();
+		textFieldHost.setBounds(107, 172, 226, 20);
+		contentPane.add(textFieldHost);
+		textFieldHost.setColumns(10);
 
 		setVisible(true);
 	}
@@ -178,6 +190,7 @@ public class Login extends JFrame {
 	public static void resetTextFields() {
 		textFieldUsuario.setText("");
 		passwordField.setText("");
+		textFieldHost.setText("");
 		btnRegistrate.setEnabled(false);
 	}
 	
