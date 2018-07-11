@@ -176,7 +176,7 @@ public class Login extends JFrame {
 		contentPane.add(passwordField);
 		
 		JLabel lblHost = new JLabel("Host");
-		lblHost.setBounds(201, 147, 22, 14);
+		lblHost.setBounds(201, 147, 29, 14);
 		contentPane.add(lblHost);
 		
 		textFieldHost = new JTextField();
