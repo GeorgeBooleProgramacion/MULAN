@@ -25,13 +25,13 @@ public class Cliente {
 		}
 	}
 	
-	public void escribe() throws IOException {
+	public void escribe(int numSala) throws IOException {
 		String msj = Chat.capturarMensaje();
 		DataOutputStream dos = new DataOutputStream(cliente.getOutputStream());
 		if(!msj.toLowerCase().equals("/salir")) {	//ACA ADENTRO VA LO DE YOUTUBE PORQUE SINO ME LO ABRE PARA TODOS LOS DEL CHAT
 			if(msj.toLowerCase().contains("/youtube"))
 				Youtube.acceder(msj);
-			dos.writeUTF(this.user + ": " + msj);
+			dos.writeUTF(this.user + ": " + msj + "--" + numSala + "--");
 			msj = Chat.capturarMensaje();
 			return;
 		}

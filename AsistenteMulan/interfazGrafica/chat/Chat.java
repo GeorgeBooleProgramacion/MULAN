@@ -28,6 +28,7 @@ import javax.swing.JScrollPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.awt.ScrollPane;
@@ -51,6 +52,9 @@ public class Chat extends JFrame {
 	private static JTextPane textPaneOut;
 	private JComboBox salaComboBox;
 	private JLabel lblSalaN;
+	private int numSala = 0;
+	private String[] nombresSalas;
+	private ArrayList<String> listaSalas;
 
 	/**
 	 * Launch the application.
@@ -121,7 +125,7 @@ public class Chat extends JFrame {
 				if(!textFieldIn.getText().equals("")) {
 					//textPaneOut.setText(textPaneOut.getText() + "\n" + textFieldIn.getText());
 					try {
-						c.escribe();
+						c.escribe(numSala);
 						textFieldIn.setText("");
 					} catch (NullPointerException | IOException e) {
 						e.printStackTrace();
@@ -138,14 +142,17 @@ public class Chat extends JFrame {
 		btnEnviar.setBounds(421, 267, 63, 23);
 		contentPane.add(btnEnviar);
 		
+		nombresSalas = new String[] {"General", "Sala 1", "Sala 2", "Sal...i de aca!!!"};
+		
+		
 		salaComboBox = new JComboBox();
-		salaComboBox.setModel(new DefaultComboBoxModel(new String[] {"General", "Sala 1", "Sala 2", "Sal...i de aca!!!"}));
-		salaComboBox.addItemListener(new ItemListener() {
+		salaComboBox.setModel(new DefaultComboBoxModel(nombresSalas));		//listaSalas.toArray(List<String>)//Ver si se puede pasar la lista a string[] (arriba esta el string por las dudas)
+		salaComboBox.addItemListener(new ItemListener() {													  //Para poder ir agregando salas a medida que se necesite
 			public void itemStateChanged(ItemEvent arg0) {
 				String sala = salaComboBox.getSelectedItem().toString();
 				textPaneOut.setText(textPaneOut.getText() + "\nEsta en " + sala);
 				
-				int numSala = salaComboBox.getSelectedIndex();
+				numSala = salaComboBox.getSelectedIndex();
 			}
 		});
 		salaComboBox.setBounds(40, 267, 104, 20);
