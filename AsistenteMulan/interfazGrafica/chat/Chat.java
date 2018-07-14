@@ -80,7 +80,7 @@ public class Chat extends JFrame {
 		setResizable(false);
 		setTitle("CHAT <ALPHA V.0.0.1>");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 330);
+		setBounds(100, 100, 703, 415);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -96,11 +96,13 @@ public class Chat extends JFrame {
 		contentPane.add(scrollPaneOut);*/
 		
 		textPaneOut = new JTextPane();
+		textPaneOut.setBounds(213, 11, 472, 276);
+		contentPane.add(textPaneOut);
 		textPaneOut.setText("Bienvenido al Chat!");
 		textPaneOut.setFont(new Font("Calibri", Font.PLAIN, 12));
 		textPaneOut.setEditable(false);
-		JScrollPane scrollPaneOut = new JScrollPane(textPaneOut);
-		scrollPaneOut.setBounds(10,11,474,189);
+		JScrollPane scrollPaneOut = new JScrollPane();
+		scrollPaneOut.setBounds(213,11,474,276);
 		contentPane.add(scrollPaneOut);
 		
 		
@@ -114,7 +116,7 @@ public class Chat extends JFrame {
 			}
 		});
 		textFieldIn.setHorizontalAlignment(SwingConstants.LEFT);
-		textFieldIn.setBounds(10, 211, 474, 45);
+		textFieldIn.setBounds(213, 298, 474, 45);
 		contentPane.add(textFieldIn);
 		textFieldIn.setColumns(10);
 		
@@ -139,7 +141,7 @@ public class Chat extends JFrame {
 				}*/
 			}
 		});
-		btnEnviar.setBounds(421, 267, 63, 23);
+		btnEnviar.setBounds(624, 354, 63, 23);
 		contentPane.add(btnEnviar);
 		
 		nombresSalas = new String[] {"General", "Sala 1", "Sala 2", "Sal...i de aca!!!"};
@@ -155,16 +157,16 @@ public class Chat extends JFrame {
 				numSala = salaComboBox.getSelectedIndex();
 			}
 		});
-		salaComboBox.setBounds(40, 267, 104, 20);
+		salaComboBox.setBounds(40, 354, 104, 20);
 		contentPane.add(salaComboBox);
 		
 		lblSalaN = new JLabel("Sala:");
-		lblSalaN.setBounds(10, 270, 46, 14);
+		lblSalaN.setBounds(10, 357, 46, 14);
 		contentPane.add(lblSalaN);
 		
 		JButton btnCrearSala = new JButton("Crear Sala");
 		btnCrearSala.setEnabled(false);
-		btnCrearSala.setBounds(154, 266, 89, 23);
+		btnCrearSala.setBounds(154, 353, 89, 23);
 		contentPane.add(btnCrearSala);
 		
 		setVisible(true);
