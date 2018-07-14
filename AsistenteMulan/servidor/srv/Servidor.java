@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -15,6 +16,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import bd.User;
+import cli.Cliente;
 
 public class Servidor extends Thread {
 
@@ -38,6 +40,7 @@ public class Servidor extends Thread {
 			System.out.println("Skynet online...");
 			while (i < 999) {
 				Socket cliente = servidor.accept();
+				
 				clientes.add(cliente);
 				new ServidorHilo(cliente, clientes).start();
 				i++;

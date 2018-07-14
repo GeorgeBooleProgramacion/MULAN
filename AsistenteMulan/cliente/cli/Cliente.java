@@ -27,8 +27,8 @@ public class Cliente {
 			this.sala = "General";
 			this.conectado = true;
 			new ClienteHilo(cliente).start();
-			//new DataOutputStream(cliente.getOutputStream()).writeUTF(this.cliente + "--" + this.user + "--" + this.pw + "--" + this.sala);
 			//ServidorHilo.cargarCliente(this);
+			//new DataOutputStream(cliente.getOutputStream()).writeUTF(this.cliente + "--" + this.user + "--" + this.pw + "--" + this.sala);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
