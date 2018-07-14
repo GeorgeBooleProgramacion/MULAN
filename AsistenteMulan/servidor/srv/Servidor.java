@@ -50,14 +50,15 @@ public class Servidor extends Thread {
 				System.out.println("Skynet offline.");
 			} catch (IOException e) {
 				e.printStackTrace();
-			};
+			}
+			;
 			factory.close();
 			session.close();
 
 		}
 	}
 
-	public static boolean loguearUser(User cli) {	
+	public static boolean loguearUser(User cli) {
 		Transaction tx = session.beginTransaction();
 		try {
 			tx.commit();
@@ -66,17 +67,17 @@ public class Servidor extends Thread {
 			Root<User> rp = cq.from(User.class);
 			cq.select(rp).where(cb.like(rp.get("user"), cli.getUser()));
 			User ue = session.createQuery(cq).getSingleResult();
-			if(ue.getPass().equals(cli.getPass()))
+			if (ue.getPass().equals(cli.getPass()))
 				return true;
 			else
 				return false;
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;			
+			return false;
 		}
 	}
-	
+
 	public static boolean puedoRegistrarUser(User cli) {
 		Transaction tx = session.beginTransaction();
 		try {
@@ -86,31 +87,45 @@ public class Servidor extends Thread {
 			Root<User> rp = cq.from(User.class);
 			cq.select(rp).where(cb.like(rp.get("user"), cli.getUser()));
 			User ue = session.createQuery(cq).getSingleResult();
-			if(!ue.getUser().equals(cli.getUser()))
+			if (!ue.getUser().equals(cli.getUser()))
 				return true;
 			else
 				return false;
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return true;			
+			return true;
 		}
 	}
-	
+
 	public static void registrarUser(User cli) {
 		Transaction tx = session.beginTransaction();
 		try {
-			session.saveOrUpdate(new User(cli.getUser(), cli.getPass()));		
+			session.saveOrUpdate(new User(cli.getUser(), cli.getPass()));
 			tx.commit();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}
 	}
 
+	public static ArrayList<User> todosLosUsuarios() {
+		Transaction tx = session.beginTransaction();
+		ArrayList<User> list = new ArrayList<User>();
+		try {
+			tx.commit();
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<User> cq = cb.createQuery(User.class);
+			Root<User> rp = cq.from(User.class);
+			list = (ArrayList<User>) session.createQuery(cq).getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	public static void main(String[] args) {
 		new Servidor(10000);
-
 	}
 
 }
