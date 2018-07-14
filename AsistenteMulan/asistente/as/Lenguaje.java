@@ -1,5 +1,6 @@
 package as;
 
+import java.io.FileNotFoundException;
 import java.util.Date;
 
 import java.util.regex.Matcher;
@@ -74,10 +75,18 @@ public class Lenguaje {
 			"2) Un robot debe cumplir las órdenes dadas por los seres humanos, a excepción de aquellas que entrasen en conflicto con la primera ley.",
 			"3) Un robot debe proteger su propia existencia en la medida en que esta protección no entre en conflicto con la primera o con la segunda ley."};
 	
+	public static final String[] REG_DEU = {"me debe ", "le debo", "gastamos"};
+	
 	static final Pattern EXP_CHK = Pattern.compile("(?i:chuck norris fact)");
 	static final Pattern EXP_LYR = Pattern.compile("(?i:leyes de la robotica)");
 	
 	public static int conocido(String msj) {
+		
+		for (int i = 0; i < REG_DEU.length; i++) {
+			if (sinTildes(msj).toUpperCase().contains(sinTildes(REG_DEU[i]).toUpperCase())) {
+				return 21;
+			}
+		}
 		
 		if(enJuego)
 			return 20;
@@ -202,6 +211,10 @@ public class Lenguaje {
 	
 	public static String leyes_robotica() {
 		return "Las leyes de la robotica son:\n" + REG_LYR[0] + "\n" + REG_LYR[1] + "\n" + REG_LYR[2];
+	}
+	
+	public static String deuda(String msj, String usr) throws FileNotFoundException {
+		return Deudas.retornarSaldo(msj, usr);
 	}
 	
 	public static String conversion(String msj) {
@@ -456,7 +469,7 @@ public class Lenguaje {
 		//String msjf = sinTildes(msj);
 		
 		//final String expresion = "(llevar paraguas|necesito paraguas|usar paraguas)(.*|\\w*|\\s*)(ubicacion|en)(.|\\s)(?:\\w*\\s*\\w*|\\w*),\\s*(?:[a-zA-Z]{2})(.\\s*)(@mulan)";
-		final String expresion = "(?:llevar paraguas|necesito paraguas|usar paraguas)(?:.*|\\w*|\\s*)(?:ubicacion|en)(?:.|\\s)(\\w*\\s*\\w*|\\w*),\\s*([a-zA-Z]{2})(?:.\\s*)(?:@mulan)";
+		final String expresion = "(?:llevar paraguas|necesito paraguas|usar paraguas)(?:.*|\\w*|\\s*)(?:ubicacion|en)(?:.|\\s)(\\w*\\s*\\w*|\\w*),\\s*([a-zA-Z]{2})(?:.\\s*)"; //(?:@mulan)
 		
 		final Pattern pattern = Pattern.compile(expresion);
 		final Matcher matcher = pattern.matcher(msj.toLowerCase());
