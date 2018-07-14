@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import as.Youtube;
 import chat.Chat;
+import srv.Servidor;
 import srv.ServidorHilo;
 
 public class Cliente {
@@ -28,7 +29,7 @@ public class Cliente {
 			this.conectado = true;
 			new ClienteHilo(cliente).start();
 			//new DataOutputStream(cliente.getOutputStream()).writeUTF(this.cliente + "--" + this.user + "--" + this.pw + "--" + this.sala);
-			//ServidorHilo.cargarCliente(this);
+			//Servidor.cargarCliente(this);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
