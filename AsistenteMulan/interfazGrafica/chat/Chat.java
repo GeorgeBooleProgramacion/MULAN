@@ -50,11 +50,10 @@ public class Chat extends JFrame {
 	private static Cliente cli;
 	//private static String user = cli.getUser();
 	private static JTextPane textPaneOut;
-	private JComboBox salaComboBox;
 	private JLabel lblSalaN;
-	private int numSala = 0;
-	private String[] nombresSalas;
-	private ArrayList<String> listaSalas;
+	//private int numSala = 0;
+	//private String[] nombresSalas;
+	//private ArrayList<String> listaSalas;
 
 	/**
 	 * Launch the application.
@@ -80,29 +79,19 @@ public class Chat extends JFrame {
 		setResizable(false);
 		setTitle("CHAT <ALPHA V.0.0.1>");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 703, 415);
+		setBounds(100, 100, 500, 330);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		/*JTextPane textPaneOut = new JTextPane();
-		textPaneOut.setEditable(false);
-		textPaneOut.setBounds(10, 11, 387, 154);
-		contentPane.add(textPaneOut);
-		JScrollPane scrollPaneOut = new JScrollPane(textPaneOut);
-		scrollPaneOut.setBounds(0, 97, 204, -97);
-		contentPane.add(scrollPaneOut);*/
-		
 		textPaneOut = new JTextPane();
-		textPaneOut.setBounds(213, 11, 472, 276);
-		contentPane.add(textPaneOut);
 		textPaneOut.setText("Bienvenido al Chat!");
 		textPaneOut.setFont(new Font("Calibri", Font.PLAIN, 12));
 		textPaneOut.setEditable(false);
-		JScrollPane scrollPaneOut = new JScrollPane();
-		scrollPaneOut.setBounds(213,11,474,276);
+		JScrollPane scrollPaneOut = new JScrollPane(textPaneOut);
+		scrollPaneOut.setBounds(10,11,474,189);
 		contentPane.add(scrollPaneOut);
 		
 		
@@ -116,7 +105,7 @@ public class Chat extends JFrame {
 			}
 		});
 		textFieldIn.setHorizontalAlignment(SwingConstants.LEFT);
-		textFieldIn.setBounds(213, 298, 474, 45);
+		textFieldIn.setBounds(10, 211, 474, 45);
 		contentPane.add(textFieldIn);
 		textFieldIn.setColumns(10);
 		
@@ -125,49 +114,22 @@ public class Chat extends JFrame {
 		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(!textFieldIn.getText().equals("")) {
-					//textPaneOut.setText(textPaneOut.getText() + "\n" + textFieldIn.getText());
 					try {
-						c.escribe(numSala);
+						c.escribe();
 						textFieldIn.setText("");
 					} catch (NullPointerException | IOException e) {
 						e.printStackTrace();
 						textPaneOut.setText(textPaneOut.getText() + "\n" + "<EL SERVIDOR NO SE ENCUENTRA ONLINE.>");
 					}					
 				}
-				/*else {
-					if(textFieldIn.getText().equals("/9gag") || textFieldIn.getText().equals("/9Gag") || textFieldIn.getText().equals("/9GAG")) {
-						
-					}
-				}*/
 			}
 		});
-		btnEnviar.setBounds(624, 354, 63, 23);
+		btnEnviar.setBounds(421, 267, 63, 23);
 		contentPane.add(btnEnviar);
 		
-		nombresSalas = new String[] {"General", "Sala 1", "Sala 2", "Sal...i de aca!!!"};
-		
-		
-		salaComboBox = new JComboBox();
-		salaComboBox.setModel(new DefaultComboBoxModel(nombresSalas));		//listaSalas.toArray(List<String>)//Ver si se puede pasar la lista a string[] (arriba esta el string por las dudas)
-		salaComboBox.addItemListener(new ItemListener() {													  //Para poder ir agregando salas a medida que se necesite
-			public void itemStateChanged(ItemEvent arg0) {
-				String sala = salaComboBox.getSelectedItem().toString();
-				textPaneOut.setText(textPaneOut.getText() + "\nEsta en " + sala);
-				
-				numSala = salaComboBox.getSelectedIndex();
-			}
-		});
-		salaComboBox.setBounds(40, 354, 104, 20);
-		contentPane.add(salaComboBox);
-		
-		lblSalaN = new JLabel("Sala:");
-		lblSalaN.setBounds(10, 357, 46, 14);
+		lblSalaN = new JLabel("Sala: " + cli.getSala());
+		lblSalaN.setBounds(20, 270, 375, 14);
 		contentPane.add(lblSalaN);
-		
-		JButton btnCrearSala = new JButton("Crear Sala");
-		btnCrearSala.setEnabled(false);
-		btnCrearSala.setBounds(154, 353, 89, 23);
-		contentPane.add(btnCrearSala);
 		
 		setVisible(true);
 		
@@ -227,12 +189,6 @@ public class Chat extends JFrame {
 		String path = "imagenes\\img01.jpg";
 		String url = null;
 		String t = "9GAG Random Post!";
-		
-		//ImageExtractor ie = new ImageExtractor();
-		//url = ImageExtractor.extractImageUrl("9gag.com/random");
-		//System.out.println(url);
-		//ImageExtractor.saveImage(url, path);
-		//Service9gag srvGag = new Service9gag(path);
 		
 		Image9gag imgGag = new Image9gag(path,t);
 	}

@@ -4,22 +4,25 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import as.Asistente;
+import cli.Cliente;
 
 public class ServidorHilo extends Thread {
 
 	private Socket cliente;
 	private ArrayList<Socket> listaCli;
-	private int[][] matSalasChat;
 	private Asistente mulan;
+	private static LinkedList<Cliente> clientesList;
 
 	public ServidorHilo(Socket cli, ArrayList<Socket> lc) {
 		super();
 		this.cliente = cli;
 		this.listaCli = lc;
+		this.clientesList = new LinkedList<Cliente>();
 	}
 
 	public void run() {
@@ -28,25 +31,21 @@ public class ServidorHilo extends Thread {
 			msj = new DataInputStream(cliente.getInputStream()).readUTF();
 			while (!msj.toLowerCase().equals("/salir")) {
 				System.out.println(msj);
-
-				Pattern pattern = Pattern.compile("(\\w*)(?::)(.*|\\w*|\\s*)(@mulan)(?:--)(\\d)(?:--)");
-				Matcher matcher = pattern.matcher(msj.toLowerCase());
-				String msj2 = "";
+				String msj2 = null;
 				String usuario = "";
-				String sala = "0";
-				if(matcher.find() && matcher.group(3).equals("@mulan")) {		
-					usuario = matcher.group(1);
-					sala = matcher.group(4);
-					System.out.println(sala);
-					msj = msj.replace("--" + sala + "--", " ");
-					mulan = new Asistente("mulan", usuario);
-					msj2 = mulan.charlar(msj);
-					System.out.println(msj2);
+				if(msj.toLowerCase().contains("@mulan")) {
+					Pattern pattern = Pattern.compile("(\\w*)(:?:)(.*|\\w*|\\s*)(@mulan)");
+					Matcher matcher = pattern.matcher(msj.toLowerCase());
+					if(matcher.find()) {
+						usuario = matcher.group(1);
+						mulan = new Asistente("mulan", usuario);
+						msj2 = mulan.charlar(msj);
+						//msj2 = mulan.charlar(matcher.group(2) + "@mulan");
+						System.out.println(msj2);
+					}
 					
-					//new DataOutputStream(cliente.getOutputStream()).writeUTF(msj2);
-					//new DataOutputStream(cliente.getOutputStream()).writeUTF(msj);
 				}
-				else {
+				/*else {
 					pattern = Pattern.compile("(\\w*)(?::)(.*|\\w*|\\s*)(?:--)(\\d)(?:--)");
 					matcher = pattern.matcher(msj.toLowerCase());
 					if(matcher.find()) {
@@ -54,14 +53,30 @@ public class ServidorHilo extends Thread {
 						System.out.println(sala);
 						msj = msj.replace("--" + sala + "--", " ");
 					}
-				}
+				}*/
+				else{
+					String usuarioMencionado = null;
+					if(msj.toLowerCase().contains("@")) {
+						Pattern pattern = Pattern.compile("(?:@)(\\w)");
+						Matcher matcher = pattern.matcher(msj.toLowerCase());
+						if(matcher.find()) {
+							usuarioMencionado = matcher.group(1);
+							int j = 0;
+							while(!clientesList.get(j).getUser().equals(usuarioMencionado))
+								j++;
+							if(clientesList.get(j).getUser().equals(usuarioMencionado) && clientesList.get(j).getConectado())
+								new DataOutputStream(clientesList.get(j).getCliente().getOutputStream()).writeUTF(msj);
+						}
+					}
+						
 					
-				//if(msj.equals("--1--"))					//Sacar primera parte del mensaje con regex (para saber a donde mandarlo) y solo pasar la segunda como mensaje
+				}
+				
 				
 				for (Socket i : listaCli) {
 					new DataOutputStream(i.getOutputStream()).writeUTF(msj);
 					if(msj2 != null)
-						new DataOutputStream(i.getOutputStream()).writeUTF(msj2);
+						new DataOutputStream(i.getOutputStream()).writeUTF("Mulan: " + msj2);
 				}
 				
 				
@@ -72,6 +87,13 @@ public class ServidorHilo extends Thread {
 		} catch (Exception e) {
 			System.out.println("El cliente se ha desconectado");
 		}
+	}
+	
+	
+	
+	public static void cargarCliente(Cliente nuevoCliente) {
+		clientesList.add(nuevoCliente);
+		System.out.println("Se conecto el usuario " + nuevoCliente.getUser());
 	}
 
 }
