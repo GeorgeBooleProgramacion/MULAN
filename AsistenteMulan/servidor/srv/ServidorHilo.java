@@ -16,13 +16,13 @@ public class ServidorHilo extends Thread {
 	private Socket cliente;
 	private ArrayList<Socket> listaCli;
 	private Asistente mulan;
-	private static LinkedList<Cliente> clientesList;
+	private static LinkedList<Cliente> clientesList = new LinkedList<Cliente>();
 
-	public ServidorHilo(Socket cli, ArrayList<Socket> lc, LinkedList<Cliente> clientesList) {
+	public ServidorHilo(Socket cli, ArrayList<Socket> lc) {
 		super();
 		this.cliente = cli;
 		this.listaCli = lc;
-		this.clientesList = clientesList;
+		//this.clientesList = new LinkedList<Cliente>();
 	}
 
 	public void run() {
@@ -96,5 +96,10 @@ public class ServidorHilo extends Thread {
 		System.out.println("Se conecto el usuario " + nuevoCliente.getUser());
 	}
 	
-	
+
+	public static LinkedList<Cliente> getClientesList(){
+		return clientesList;
+	}
+
+
 }

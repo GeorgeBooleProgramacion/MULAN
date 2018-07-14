@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import bd.User;
 import chat.Chat;
 import cli.Cliente;
+import salas.Salas;
 import srv.Servidor;
 
 import javax.swing.JTextField;
@@ -111,9 +112,11 @@ public class Login extends JFrame {
 				if(Servidor.loguearUser(cli)) {
 					try {
 						if(textFieldHost.getText().equals("") || textFieldHost.getText().contains(" "))
-							new Chat(new Cliente(10000, "localhost", cli.getUser(), cli.getPass()));
+							//new Chat(new Cliente(10000, "localhost", cli.getUser(), cli.getPass()));
+							new Salas(new Cliente(10000, "localhost", cli.getUser(), cli.getPass()));
 						else
-							new Chat(new Cliente(10000, textFieldHost.getText(), cli.getUser(), cli.getPass()));
+							//new Chat(new Cliente(10000, textFieldHost.getText(), cli.getUser(), cli.getPass()));
+							new Salas(new Cliente(10000, textFieldHost.getText(), cli.getUser(), cli.getPass()));
 						setVisible(false);
 					} catch (Exception e) {
 					}

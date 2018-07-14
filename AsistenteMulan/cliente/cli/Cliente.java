@@ -30,6 +30,7 @@ public class Cliente {
 			new ClienteHilo(cliente).start();
 			//new DataOutputStream(cliente.getOutputStream()).writeUTF(this.cliente + "--" + this.user + "--" + this.pw + "--" + this.sala);
 			//Servidor.cargarCliente(this);
+
 		} catch(IOException e) {
 			e.printStackTrace();
 		}

@@ -40,8 +40,9 @@ public class Servidor extends Thread {
 			System.out.println("Skynet online...");
 			while (i < 999) {
 				Socket cliente = servidor.accept();
+				
 				clientes.add(cliente);
-				new ServidorHilo(cliente, clientes, clientesList).start();
+				new ServidorHilo(cliente, clientes).start();
 				i++;
 			}
 		} catch (Exception e) {
