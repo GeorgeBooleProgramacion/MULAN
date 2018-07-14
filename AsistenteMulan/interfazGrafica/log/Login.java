@@ -1,41 +1,33 @@
 
 package log;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import bd.Usuario;
+import bd.User;
 import chat.Chat;
 import cli.Cliente;
+import srv.Servidor;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
-import javax.swing.JInternalFrame;
-import javax.swing.JDesktopPane;
-import javax.swing.JLayeredPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Font;
-import javax.swing.JList;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 
 public class Login extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static JTextField textFieldUsuario;
 	private static JPasswordField passwordField;
@@ -51,7 +43,6 @@ public class Login extends JFrame {
 			public void run() {
 				try {
 					Login frame = new Login();
-					// frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -77,41 +68,22 @@ public class Login extends JFrame {
 		btnRegistrate.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnRegistrate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					if (!Usuario.puedoRegistrarUser(textFieldUsuario.getText()))
-						new PopupUserYaReg();
-					else if (passwordField.getText().equals("")) {
-						new PopupIngPw();
-					} else {
-						Usuario.registrarUser(textFieldUsuario.getText(), passwordField.getText());
-						new PopupRegConEx();
-					}
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
+				User cli = new User(textFieldUsuario.getText(), passwordField.getText());
+				if(!Servidor.puedoRegistrarUser(cli))
+					new PopupUserYaReg();
+				else if (passwordField.getText().equals("")) {
+					new PopupIngPw();
+				} else {
+					Servidor.registrarUser(cli);
+					new PopupRegConEx();
 				}
 			}
 		});
-		btnRegistrate.setEnabled(false);
 		btnRegistrate.setBounds(345, 11, 89, 23);
 		contentPane.add(btnRegistrate);
 
 		textFieldUsuario = new JTextField();
 		textFieldUsuario.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				try {
-					if (textFieldUsuario.getText().equals("") || textFieldUsuario.getText().contains(" ")
-							|| !Usuario.puedoRegistrarUser(textFieldUsuario.getText()))
-						btnRegistrate.setEnabled(false);
-					else
-						btnRegistrate.setEnabled(true);
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
-			}
-
 			@Override
 			public void keyPressed(KeyEvent k) {
 				if (k.getKeyCode() == KeyEvent.VK_ENTER)
@@ -129,36 +101,26 @@ public class Login extends JFrame {
 		JLabel lblContrasea = new JLabel("Contrase\u00F1a");
 		lblContrasea.setBounds(184, 91, 73, 14);
 		contentPane.add(lblContrasea);
-		/*
-		JComboBox<?> salaComboBox = new JComboBox();
-		salaComboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3"}));
-		salaComboBox.setBounds(238, 181, 36, 20);
-		contentPane.add(salaComboBox);
-		*/
+
 		btnIniciar = new JButton("Iniciar");
 		btnIniciar.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					if (Usuario.buscarUser(textFieldUsuario.getText(), passwordField.getText())) {
-						// new PopupEntro();
-						try {
-							if(textFieldHost.getText().equals("") || textFieldHost.getText().contains(" "))
-								new Chat(new Cliente(10000, "localhost", textFieldUsuario.getText()));
-							else
-								new Chat(new Cliente(10000, textFieldHost.getText(), textFieldUsuario.getText()));
+				User cli = new User(textFieldUsuario.getText(), passwordField.getText());
 
-							setVisible(false);
-						} catch (Exception e) {
-							//System.err.println("Se cerro la conexión"); -> popup fin de conexion
-						}
-						
+				if(Servidor.loguearUser(cli)) {
+					try {
+						if(textFieldHost.getText().equals("") || textFieldHost.getText().contains(" "))
+							new Chat(new Cliente(10000, "localhost", cli.getUser(), cli.getPass()));
+						else
+							new Chat(new Cliente(10000, textFieldHost.getText(), cli.getUser(), cli.getPass()));
+						setVisible(false);
+					} catch (Exception e) {
 					}
-					else
-						new PopupError();
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
+					
 				}
+				else
+					new PopupError();
 			}
 		});
 		btnIniciar.setBounds(172, 237, 89, 23);
@@ -180,6 +142,13 @@ public class Login extends JFrame {
 		contentPane.add(lblHost);
 		
 		textFieldHost = new JTextField();
+		textFieldHost.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent k) {
+				if (k.getKeyCode() == KeyEvent.VK_ENTER)
+					btnIniciar.doClick();
+			}
+		});
 		textFieldHost.setBounds(107, 172, 226, 20);
 		contentPane.add(textFieldHost);
 		textFieldHost.setColumns(10);
@@ -193,20 +162,4 @@ public class Login extends JFrame {
 		textFieldHost.setText("");
 		btnRegistrate.setEnabled(false);
 	}
-	
-	public String quieroMiIp() throws Exception {
-		 try {
-			 	URL whatismyip = new URL("http://checkip.amazonaws.com");
-			 	BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));     
-			 	String ip = in.readLine();     
-			 	//System.out.println("My Public ip is = "+ip);
-			 	in.close();
-			 	return ip;
-			 	//System.out.println("----------------------------------------");
-	         } catch (MalformedURLException ex) {
-	        	throw new Exception("URL no compatible");
-	        } catch (IOException ex) {
-	        	throw new Exception("Falla en la entrada");
-	        }
-	    }
 }

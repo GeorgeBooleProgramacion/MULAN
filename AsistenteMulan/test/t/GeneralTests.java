@@ -17,7 +17,6 @@ import java.util.regex.Pattern;
 import org.junit.*;
 
 import as.Fecha;
-import bd.Usuario;
 
 public class GeneralTests {
 	
@@ -104,16 +103,6 @@ public class GeneralTests {
 		for(i++; i < str.length; i++) {
 			System.out.println(str[i]);
 		}
-	}
-	
-	@Test
-	public void probandoLeerUsuarios() throws FileNotFoundException {
-		Assert.assertTrue(Usuario.buscarUser("usr1", "1234"));
-	}
-	
-	@Test
-	public void probandoAppendearUsers() throws IOException {
-		Usuario.registrarUser("usr6", "4321");
 	}
 	
 	@Test
