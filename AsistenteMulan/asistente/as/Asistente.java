@@ -1,5 +1,8 @@
 package as;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import as.Asistente;
 import as.Clima;
 import srv.ServicioClima;
@@ -36,11 +39,15 @@ public class Asistente {
 	private static final int CONVERSION = 6;
 	private static final int RESPUESTA_CHUCK = 15;
 	private static final int LEYES_ROBOTICA = 10;
+	private static final int DEUDA = 21;
 
-	public String charlar(String msj) {
+	public String charlar(String msj) throws IOException {
 		if (msj.contains("@" + this.name)) {
 			
 			this.msj = msj;
+			
+			if(Lenguaje.conocido(msj) == DEUDA)
+				return responderConversacion(DEUDA);
 			
 			if(Lenguaje.conocido(msj) == CONVERSION)
 				return responderConversacion(CONVERSION);
@@ -84,8 +91,12 @@ public class Asistente {
 		return null;
 	}
 
-	private String responderConversacion(int rsp) {
+	private String responderConversacion(int rsp) throws IOException {
 		int i;
+		
+		if(rsp == DEUDA) {
+			return "@" + this.user + Lenguaje.deuda(msj, this.user);
+		}
 		
 		if (rsp == CONVERSION) {
 			return "@" + this.user + Lenguaje.conversion(msj);
