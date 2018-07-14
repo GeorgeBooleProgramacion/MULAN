@@ -75,7 +75,7 @@ public class Lenguaje {
 			"2) Un robot debe cumplir las órdenes dadas por los seres humanos, a excepción de aquellas que entrasen en conflicto con la primera ley.",
 			"3) Un robot debe proteger su propia existencia en la medida en que esta protección no entre en conflicto con la primera o con la segunda ley."};
 	
-	public static final String[] REG_DEU = {"me debe ", "le debo a"};
+	public static final String[] REG_DEU = {"me debe ", "le debo", "gastamos"};
 	
 	static final Pattern EXP_CHK = Pattern.compile("(?i:chuck norris fact)");
 	static final Pattern EXP_LYR = Pattern.compile("(?i:leyes de la robotica)");
