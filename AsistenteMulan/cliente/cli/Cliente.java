@@ -14,11 +14,13 @@ public class Cliente {
 
 	private Socket cliente;
 	private String user;
+	private String pw;
 	
-	public Cliente(int puerto, String ip, String u) {
+	public Cliente(int puerto, String ip, String u, String p) {
 		try {
 			this.cliente = new Socket(ip, puerto);
 			this.user = u;
+			this.pw = p;
 			new ClienteHilo(cliente).start();
 		} catch(IOException e) {
 			e.printStackTrace();
@@ -40,5 +42,9 @@ public class Cliente {
 	
 	public String getUser() {
 		return this.user;
+	}
+	
+	public String getPw() {
+		return this.pw;
 	}
 }
