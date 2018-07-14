@@ -10,6 +10,7 @@ import java.util.Scanner;
 import as.Youtube;
 import chat.Chat;
 import srv.Servidor;
+import msj.Mensaje;
 import srv.ServidorHilo;
 
 public class Cliente {
@@ -19,7 +20,7 @@ public class Cliente {
 	private String pw;
 	private String sala;
 	private Boolean conectado;
-	
+
 	public Cliente(int puerto, String ip, String u, String p) {
 		try {
 			this.cliente = new Socket(ip, puerto);
@@ -35,21 +36,23 @@ public class Cliente {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void escribe() throws IOException {
+		//Mensaje msj = Chat.capturarMensaje();
 		String msj = Chat.capturarMensaje();
 		DataOutputStream dos = new DataOutputStream(cliente.getOutputStream());
-		if(!msj.toLowerCase().equals("/salir")) {	//ACA ADENTRO VA LO DE YOUTUBE PORQUE SINO ME LO ABRE PARA TODOS LOS DEL CHAT
-			if(msj.toLowerCase().contains("/youtube"))
-				Youtube.acceder(msj);
+		if(!msj/*.getMsj()*/.toLowerCase().equals("/salir")) {	//ACA ADENTRO VA LO DE YOUTUBE PORQUE SINO ME LO ABRE PARA TODOS LOS DEL CHAT
+			if(msj/*.getMsj()*/.toLowerCase().contains("/youtube"))
+				Youtube.acceder(msj/*.getMsj()*/);
 			dos.writeUTF(this.user + ": " + msj);
+			//dos.writeUTF(msj.getUser() + ": " + msj.getMsj() + ";:" + msj.getSala() + ":;");
 			msj = Chat.capturarMensaje();
 			return;
 		}
 		cliente.close();
 		conectado = false;
 	}
-	
+
 	public Socket getCliente() {
 		return cliente;
 	}
@@ -57,7 +60,7 @@ public class Cliente {
 	public String getUser() {
 		return this.user;
 	}
-	
+
 	public String getPw() {
 		return this.pw;
 	}
@@ -78,5 +81,5 @@ public class Cliente {
 		this.conectado = conectado;
 	}
 
-	
+
 }

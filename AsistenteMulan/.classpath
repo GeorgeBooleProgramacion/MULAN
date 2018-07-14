@@ -8,6 +8,7 @@
 	<classpathentry kind="src" path="baseDeDatos"/>
 	<classpathentry kind="src" path="servidor"/>
 	<classpathentry kind="src" path="cliente"/>
+	<classpathentry kind="src" path="mensaje"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="Jars/gson-2.6.2.jar"/>

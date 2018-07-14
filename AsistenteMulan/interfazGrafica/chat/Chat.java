@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import as.Youtube;
 import cli.Cliente;
+import msj.Mensaje;
 import srv.ImageExtractor;
 import srv.Service9gag;
 
@@ -139,11 +140,13 @@ public class Chat extends JFrame {
 		textPaneOut.setText(textPaneOut.getText() + "\n" + msj);
 	}
 	
-	public static String capturarMensaje() {
+	public static String/*Mensaje*/ capturarMensaje() {
+		//Mensaje mensj;
 		String msj;
 		if(!(msj = textFieldIn.getText()).equals(""))
 			textFieldIn.setText("");
-			return msj;
+		//mensj = new Mensaje(msj, cli.getUser(), cli.getSala());
+		return msj;
 	}
 
 	public static void ponerMeme(int m) throws IOException, InterruptedException {
